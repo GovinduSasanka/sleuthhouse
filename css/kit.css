@@ -1,0 +1,180 @@
+/* Printable kit. Pages are 210mm wide × 270mm tall so they fit both A4 and US Letter. */
+
+.kit {
+  --ink: #1f1a17;
+  --paper: #fffdf7;
+  --kraft: #efe3c8;
+  --red: #c8372d;
+  --blue: #2a5d9f;
+  --muted: #6b6259;
+  --line: #d8ccb4;
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--ink);
+}
+
+.kit .page {
+  position: relative;
+  width: 210mm;
+  min-height: 270mm;
+  box-sizing: border-box;
+  padding: 13mm 14mm 16mm;
+  margin: 0 auto 28px;
+  background: var(--paper);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 10px 30px rgba(60, 40, 20, .12);
+  font-size: 11pt;
+  line-height: 1.45;
+  overflow: hidden;
+}
+
+.kit h1, .kit h2, .kit h3, .kit h4 { font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; margin: 0 0 .4em; line-height: 1.15; }
+.kit .title { font-size: 25pt; margin-bottom: 4px; }
+.kit h3 { font-size: 13.5pt; margin-top: 14px; border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; }
+.kit h4 { font-size: 11pt; }
+.kit .section-title { font-size: 20pt; }
+.kit .section-title small { font-family: 'Nunito', sans-serif; font-size: 9pt; color: var(--muted); margin-left: 8px; }
+.kit .lede { color: var(--muted); margin: 0 0 8px; }
+.kit .small { font-size: 9pt; color: var(--muted); }
+.kit .mono { font-family: 'Special Elite', monospace; letter-spacing: .06em; }
+.kit p { margin: 0 0 .6em; }
+
+.kit .page-foot {
+  position: absolute; left: 14mm; right: 14mm; bottom: 7mm;
+  display: flex; justify-content: space-between;
+  font-size: 8pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 3px;
+}
+
+.kit .stamp {
+  display: inline-block; font-family: 'Special Elite', monospace; font-size: 10pt; letter-spacing: .12em;
+  border: 2.5px solid currentColor; padding: 3px 10px; border-radius: 4px; transform: rotate(-2deg); margin-bottom: 8px;
+}
+.kit .stamp-red { color: var(--red); }
+.kit .stamp-blue { color: var(--blue); transform: rotate(4deg); }
+
+.kit .cols { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; }
+.kit .steps, .kit .bullets { padding-left: 18px; margin: 0; font-size: 10pt; }
+.kit .steps li, .kit .bullets li { margin-bottom: 5px; }
+
+.kit table { border-collapse: collapse; width: 100%; }
+.kit .hide-table th, .kit .hide-table td, .kit .truth th, .kit .truth td { border: 1px solid var(--line); padding: 5px 6px; text-align: left; vertical-align: top; font-size: 9.5pt; }
+.kit .hide-table thead th, .kit .truth thead th { background: var(--kraft); font-family: 'Special Elite', monospace; font-weight: 400; }
+.kit .hide-table .num { font-family: 'Special Elite', monospace; font-size: 14pt; text-align: center; width: 34px; }
+.kit .hide-table .small { font-size: 8.5pt; }
+.kit .truth tr.guilty th, .kit .truth tr.guilty td { background: #fbe3df; font-weight: 700; }
+
+/* Mission letter */
+.kit .letterhead { display: flex; align-items: center; gap: 12px; border-bottom: 3px double var(--ink); padding-bottom: 8px; margin-bottom: 12px; }
+.kit .mascot { font-size: 38pt; line-height: 1; }
+.kit .agency { font-family: 'Special Elite', monospace; font-size: 15pt; letter-spacing: .08em; }
+.kit .from { color: var(--muted); font-size: 9.5pt; }
+.kit .letterhead .stamp { margin-left: auto; font-size: 15pt; }
+.kit .case-title { font-size: 22pt; }
+.kit .letter { font-size: 11.5pt; }
+.kit .suspect-line { font-weight: 700; background: var(--kraft); padding: 6px 10px; border-radius: 6px; }
+.kit .sign { font-family: 'Special Elite', monospace; margin-top: 10px; }
+.kit .sign span { font-family: 'Nunito', sans-serif; font-size: 9pt; color: var(--muted); }
+.kit .first-clue { margin-top: 10px; }
+
+/* Puzzles */
+.kit .puzzle { border: 2px dashed var(--ink); border-radius: 10px; padding: 10px 12px; background: #fff; }
+.kit .puzzle-lead { font-family: 'Special Elite', monospace; font-size: 13pt; }
+.kit .puzzle-how { font-size: 10pt; margin: 2px 0 6px; }
+.kit .riddle { font-size: 13pt; font-style: italic; margin: 6px 0; }
+.kit .puzzle-hint, .kit .stuck { font-size: 9pt; color: var(--muted); }
+.kit .code { font-family: 'Special Elite', monospace; font-size: 20pt; letter-spacing: .18em; margin: 4px 0 8px; word-break: break-word; }
+.kit .code-emoji { letter-spacing: .05em; font-size: 20pt; }
+.kit .code-a1z26 { font-size: 15pt; letter-spacing: .04em; }
+.kit .code-pigpen { display: flex; gap: 6px; flex-wrap: wrap; }
+.kit .pigpen { color: var(--ink); }
+.kit .boxes { display: flex; gap: 5px; flex-wrap: wrap; }
+.kit .boxes span { width: 24px; height: 28px; border-bottom: 2px solid var(--ink); }
+.kit .puzzle.last { background: #fff6d6; }
+
+/* Cut-out cards */
+.kit .cut { border: 1.5px dashed #9a8f80; border-radius: 10px; position: relative; }
+.kit .cut::before { content: '✂'; position: absolute; top: -10px; left: 12px; background: var(--paper); font-size: 11px; color: #9a8f80; padding: 0 3px; }
+
+.kit .grid-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.kit .suspect { padding: 10px 12px; min-height: 72mm; box-sizing: border-box; background: #fff; }
+.kit .suspect-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.kit .suspect-icon { font-size: 40pt; line-height: 1; }
+.kit .suspect-tag { font-family: 'Special Elite', monospace; color: var(--red); border: 2px solid var(--red); padding: 1px 6px; font-size: 9pt; transform: rotate(5deg); }
+.kit .suspect-name { font-family: 'Special Elite', monospace; font-size: 18pt; margin: 4px 0; }
+.kit .suspect-known { font-size: 9.5pt; margin-bottom: 6px; }
+.kit .suspect-facts { list-style: none; padding: 6px 8px; margin: 0; background: var(--kraft); border-radius: 6px; font-size: 10pt; }
+.kit .suspect-facts li span { margin-right: 4px; }
+.kit .suspect-facts.unknown { color: var(--muted); }
+
+/* Notebook */
+.kit .nb-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.kit .nb-owner { font-family: 'Special Elite', monospace; }
+.kit .checklist { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 10px; }
+.kit .check { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 10.5pt; }
+.kit .box { display: inline-block; width: 15px; height: 15px; border: 2px solid var(--ink); border-radius: 3px; flex: none; }
+.kit .ci { font-size: 15pt; }
+.kit .grid-block { margin-top: 6px; }
+.kit .logic th, .kit .logic td { border: 1px solid var(--ink); font-size: 8.5pt; }
+.kit .logic td { height: 22px; min-width: 22px; }
+.kit .logic tbody th { text-align: left; padding: 2px 6px; white-space: nowrap; font-size: 9.5pt; }
+.kit .logic thead th { padding: 3px 2px; font-weight: 600; vertical-align: bottom; }
+.kit .vh { display: flex; flex-direction: column; align-items: center; gap: 1px; line-height: 1.1; }
+.kit .vh span { font-size: 13pt; }
+.kit .keys { display: grid; gap: 10px; }
+.kit .key { border: 1.5px solid var(--ink); border-radius: 8px; padding: 8px 10px; }
+.kit .key-grid { display: grid; grid-template-columns: repeat(13, 1fr); gap: 4px; text-align: center; font-family: 'Special Elite', monospace; font-size: 9pt; }
+.kit .key-grid span { display: flex; flex-direction: column; align-items: center; }
+.kit .key-grid i { font-style: normal; font-size: 14pt; }
+.kit .strip { display: grid; grid-template-columns: repeat(26, 1fr); text-align: center; border: 1px solid var(--ink); }
+.kit .strip span { border-right: 1px solid var(--line); display: flex; flex-direction: column; font-size: 9pt; }
+.kit .strip b { font-family: 'Special Elite', monospace; font-weight: 400; font-size: 11pt; }
+.kit .strip i { font-style: normal; color: var(--muted); font-size: 7.5pt; }
+.kit .lines .line { border-bottom: 1px solid var(--line); height: 30px; display: flex; align-items: flex-end; font-size: 9pt; }
+
+/* Clue cards */
+.kit .clue-stack { display: grid; gap: 12px; }
+.kit .clue-card { padding: 12px 14px; background: #fff; min-height: 116mm; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; }
+.kit .clue-head { display: flex; align-items: baseline; gap: 8px; border-bottom: 2px solid var(--ink); padding-bottom: 4px; }
+.kit .clue-num { font-family: 'Special Elite', monospace; font-size: 22pt; color: var(--red); }
+.kit .clue-of { color: var(--muted); }
+.kit .clue-case { margin-left: auto; font-size: 22pt; }
+.kit .clue-list { margin: 0; padding: 0; list-style: none; font-size: 12.5pt; display: grid; gap: 7px; flex: 1; }
+
+/* Finale */
+.kit .accuse { border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; }
+.kit .big-line { font-size: 13pt; }
+.kit .suspect-pick { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 4px 0 10px; font-weight: 700; }
+.kit .pick { display: flex; align-items: center; gap: 6px; }
+.kit .blank { display: inline-block; min-width: 60mm; border-bottom: 1.5px solid var(--ink); height: 1.1em; }
+.kit .blank.short { min-width: 14mm; }
+.kit .signatures { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 8px; }
+.kit .signatures div { display: flex; flex-direction: column; }
+.kit .cert { margin-top: 12px; padding: 6px; border: 3px solid var(--ink); border-radius: 12px; }
+.kit .cert-inner { border: 1.5px solid var(--ink); border-radius: 8px; padding: 10px 16px; text-align: center; background: repeating-linear-gradient(45deg, #fffaf0, #fffaf0 8px, #fff5e1 8px, #fff5e1 16px); }
+.kit .cert-icon { font-size: 30pt; line-height: 1; }
+.kit .cert-kicker { font-family: 'Special Elite', monospace; letter-spacing: .1em; font-size: 10pt; color: var(--muted); }
+.kit .cert-title { font-family: 'Special Elite', monospace; font-size: 20pt; margin: 2px 0 6px; }
+.kit .cert-names { font-family: 'Special Elite', monospace; font-size: 22pt; color: var(--blue); margin: 2px 0 6px; }
+.kit .cert-sign { display: flex; justify-content: space-between; font-family: 'Special Elite', monospace; margin-top: 8px; font-size: 10pt; }
+.kit .badges { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.kit .badge { width: 44mm; height: 44mm; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #fff; }
+.kit .badge::before { left: 50%; }
+.kit .badge-star { font-size: 26pt; color: #d9a21b; line-height: 1; }
+.kit .badge-rank { font-family: 'Special Elite', monospace; font-size: 8.5pt; }
+.kit .badge-name { font-weight: 800; font-size: 11pt; padding: 0 6px; }
+
+/* Solution */
+.kit .confession { background: #fbe3df; border-left: 5px solid var(--red); padding: 8px 12px; border-radius: 6px; margin: 8px 0; }
+.kit .confession-label { font-size: 9pt; color: var(--muted); }
+.kit .confession p { font-size: 13pt; font-style: italic; margin: 2px 0 0; }
+.kit .walk { font-size: 9.5pt; padding-left: 20px; margin: 0; columns: 1; }
+.kit .walk li { margin-bottom: 2px; }
+
+@media print {
+  @page { margin: 0; }
+  body * { visibility: hidden; }
+  .kit, .kit * { visibility: visible; }
+  .kit { position: absolute; left: 0; top: 0; }
+  .kit .page { margin: 0; box-shadow: none; break-after: page; page-break-after: always; }
+  .kit .page:last-child { break-after: auto; page-break-after: auto; }
+  .kit .cut, .kit table, .kit .puzzle, .kit .cert { break-inside: avoid; }
+  .kit { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sleuthhouse · A detective mystery set in your own home</title>
+  <meta name="description" content="Printable detective games for kids where your family, pets and toys are the suspects and clues hide around your real house. Every case is unique and logic-checked to have exactly one answer.">
+  <meta property="og:title" content="Sleuthhouse · A detective mystery set in your own home">
+  <meta property="og:description" content="Your family are the suspects. The clues are hidden under your sofa cushions. Print a one-of-a-kind mystery in 5 minutes.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/kit.css">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="logo" href="index.html"><span>🦉</span>Sleuthhouse</a>
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#proof">Why it’s different</a>
+        <a href="#pricing">Pricing</a>
+        <a class="btn btn-small btn-red" href="app.html">Build a case</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">🔍 Printable mystery games for ages 5–12</div>
+          <h1>A real detective mystery, set in <span class="hl">your own home.</span></h1>
+          <p class="hero-sub">Your family are the suspects. Your pets have motives. The clues are hidden under <em>your</em> sofa cushions. Sleuthhouse builds a one-of-a-kind case for your house and your people, ready to print in five minutes.</p>
+
+          <form class="try" id="try" autocomplete="off">
+            <div class="try-title">Try it right now:</div>
+            <div class="try-row">
+              <label>Detective’s name<input class="input" name="kid" value="Alex" maxlength="20"></label>
+              <label>A pet or toy<input class="input" name="pet" value="Biscuit" maxlength="20"></label>
+              <label>A grown-up<input class="input" name="adult" value="Dad" maxlength="20"></label>
+            </div>
+          </form>
+
+          <div class="hero-cta">
+            <a class="btn btn-red btn-big" href="app.html" id="hero-cta">Build your free case →</a>
+            <span class="hero-note">No sign-up. Free Rookie cases forever.</span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Live preview of a generated case">
+          <div class="paper paper-back"><div class="kit" id="demo-suspects"></div></div>
+          <div class="paper paper-front"><div class="kit" id="demo-clue"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="strip">
+      <div class="wrap strip-row">
+        <span>🏠 Set in your real rooms</span>
+        <span>🐶 Pets &amp; toys can be guilty</span>
+        <span>🧠 Logic-checked, one true answer</span>
+        <span>📵 No screens while playing</span>
+        <span>♾️ A new mystery every time</span>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="wrap">
+        <h2 class="section-h">From “I’m bored” to “Case closed!” in 3 steps</h2>
+        <div class="steps3">
+          <div class="step3">
+            <div class="step3-num">1</div>
+            <h3>Tell us who lives there</h3>
+            <p>Add the detectives, the suspects (Mum, Grandpa, the cat, that suspicious dinosaur) and the rooms in your home.</p>
+          </div>
+          <div class="step3">
+            <div class="step3-num">2</div>
+            <h3>Print &amp; hide the clues</h3>
+            <p>You get a mission letter, suspect cards, a detective notebook, clue cards and a secret parent sheet saying exactly where to hide each one.</p>
+          </div>
+          <div class="step3">
+            <div class="step3-num">3</div>
+            <h3>Let the hunt begin</h3>
+            <p>Detectives crack codes to find each hiding spot, cross off suspects with each clue, and name the thief. Then the culprit reads their confession!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="proof">
+      <div class="wrap proof-grid">
+        <div>
+          <h2 class="section-h left">Every clue is true. Every case has exactly one answer.</h2>
+          <p>Most printable mysteries are written once and sold to thousands of families. AI-written ones can contradict themselves. Sleuthhouse works differently.</p>
+          <ul class="ticks">
+            <li><b>A logic engine builds each case.</b> It invents what really happened, then chooses clues until reasoning alone points to one thief.</li>
+            <li><b>No clue gives it away early.</b> The engine removes every clue the solution doesn’t need, so detectives need <em>every</em> card.</li>
+            <li><b>Parents get the proof.</b> The secret sheet walks through the solution step by step, so you can give hints without spoiling it.</li>
+            <li><b>Private by design.</b> Cases are built in your browser. Your family’s names never leave your device.</li>
+          </ul>
+        </div>
+        <div class="proof-card">
+          <div class="proof-label">From a real parent sheet</div>
+          <ol id="demo-walk"></ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="levels">
+      <div class="wrap">
+        <h2 class="section-h">Grows with your detectives</h2>
+        <div class="levels3">
+          <div class="level3">
+            <div class="level3-badge">Rookie Detective</div>
+            <div class="level3-ages">Ages 5–7</div>
+            <p>Picture riddles lead to each hiding spot. Suspect cards show everything, and each clue crosses someone off.</p>
+            <div class="level3-sample">“I have a tongue but cannot talk, and I go with you when you walk.”</div>
+          </div>
+          <div class="level3">
+            <div class="level3-badge">Junior Inspector</div>
+            <div class="level3-ages">Ages 8–10</div>
+            <p>Emoji codes and scrambled words guard the spots. Some facts are hidden and must be worked out.</p>
+            <div class="level3-sample big">🐧 🍦 🍋 🍋 🐙 🐋</div>
+          </div>
+          <div class="level3">
+            <div class="level3-badge">Master Sleuth</div>
+            <div class="level3-ages">Ages 11+ &amp; grown-ups</div>
+            <p>A full logic grid, shift ciphers and pigpen code. Grown-ups get stumped too. Great for mixed-age families.</p>
+            <div class="level3-sample pig" id="demo-pigpen"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap uses">
+        <div class="use"><span>🎂</span><h3>Birthday parties</h3><p>A detective party for 1–6 kids, starring the birthday child’s own family.</p></div>
+        <div class="use"><span>🌧️</span><h3>Rainy days</h3><p>An hour of running around, thinking hard and not looking at a screen.</p></div>
+        <div class="use"><span>👵</span><h3>Grandparents</h3><p>Make Grandma the prime suspect at the next visit. She will love it.</p></div>
+        <div class="use"><span>🏫</span><h3>Classrooms</h3><p>Teachers can use classroom “rooms” and staff as suspects for logic lessons.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="wrap">
+        <h2 class="section-h">Simple pricing</h2>
+        <div class="pricing">
+          <div class="plan">
+            <div class="plan-name">Rookie</div>
+            <div class="plan-price">Free</div>
+            <ul>
+              <li>Unlimited Rookie cases (ages 5–7)</li>
+              <li>Up to 5 suspects</li>
+              <li>2 crimes: Vanished Cookies &amp; Missing Remote</li>
+              <li>Full printable kit with parent sheet</li>
+            </ul>
+            <a class="btn" href="app.html">Start free</a>
+          </div>
+          <div class="plan featured">
+            <div class="plan-flag">Most families</div>
+            <div class="plan-name">Pro</div>
+            <div class="plan-price" id="pro-price">$9.99 <small>once</small></div>
+            <ul>
+              <li>All 8 crimes, from the Sock Snatcher to the Pirate Gold Heist</li>
+              <li>Junior Inspector &amp; Master Sleuth levels</li>
+              <li>Codes, ciphers and logic grids</li>
+              <li>Up to 8 suspects</li>
+              <li>Unlimited cases, forever. No subscription.</li>
+            </ul>
+            <a class="btn btn-red" href="app.html?pro=1">Get Pro</a>
+          </div>
+        </div>
+        <p class="price-note">Less than one store-bought mystery kit, and you can play a different case every weekend.</p>
+      </div>
+    </section>
+
+    <section class="section alt" id="faq">
+      <div class="wrap faq">
+        <h2 class="section-h">Questions</h2>
+        <details><summary>What do I need?</summary><p>A printer (black &amp; white is fine), scissors, a pencil and about 10 minutes to hide the clue cards. No app, no account.</p></details>
+        <details><summary>Can a grown-up who is a suspect still play?</summary><p>Yes! Nobody really did it. The suspects are just characters. The parent who hides the clues should keep the secret sheet to themselves.</p></details>
+        <details><summary>Can we play again?</summary><p>Every case number makes a completely new mystery with a new thief, new clues and new hiding spots. Roll a new number and play again.</p></details>
+        <details><summary>How do you know it’s solvable?</summary><p>Each case is checked by a deduction solver before you see it. It only reasons the way a person can, so if the solver can name exactly one thief using the clues, so can your detectives. We also test thousands of cases by brute force.</p></details>
+        <details><summary>Are the hiding spots safe?</summary><p>Our built-in spots avoid ovens, washing machines, medicine cabinets and high shelves. You can also add your own.</p></details>
+        <details><summary>Is my family’s information uploaded?</summary><p>No. Cases are generated entirely in your browser.</p></details>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="wrap">
+        <h2>Somebody in your house is hiding something.</h2>
+        <a class="btn btn-red btn-big" href="app.html">Open the case file →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>🦉 Sleuthhouse · Made for curious kids</span>
+      <span><a href="app.html">Build a case</a> · <a href="terms.html">Terms &amp; privacy</a> · <a id="support-link" href="mailto:hello@sleuthhouse.app">Contact</a></span>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { generateCase } from './js/engine/generator.js';
+    import { renderKit, esc } from './js/render.js';
+    import { pigpen } from './js/engine/ciphers.js';
+    import { CONFIG } from './js/config.js';
+
+    document.getElementById('pro-price').innerHTML = `${esc(CONFIG.price)} <small>once</small>`;
+    document.getElementById('support-link').href = `mailto:${CONFIG.supportEmail}`;
+    document.getElementById('demo-pigpen').innerHTML = pigpen('SOFA');
+
+    const form = document.getElementById('try');
+    function update() {
+      const d = new FormData(form);
+      const kid = String(d.get('kid') || '').trim() || 'Alex';
+      const pet = String(d.get('pet') || '').trim() || 'Biscuit';
+      const adult = String(d.get('adult') || '').trim() || 'Dad';
+      const names = new Set([pet.toLowerCase(), adult.toLowerCase()]);
+      const extras = [{ name: 'Grandma', kind: 'person', icon: '👵' }, { name: 'Mr Fluff', kind: 'toy', icon: '🧸' }, { name: 'Auntie Mo', kind: 'person', icon: '👩' }]
+        .filter((s) => !names.has(s.name.toLowerCase()));
+      let k;
+      try {
+        k = generateCase({
+          detectives: [kid],
+          suspects: [{ name: adult, kind: 'person', icon: '👨' }, { name: pet, kind: 'pet', icon: '🐶' }, ...extras].slice(0, 4),
+          rooms: ['Kitchen', 'Living Room', 'Bedroom', 'Hallway'],
+          difficulty: 'rookie',
+          caseType: 'cookies',
+          seed: 'HOME-2026',
+        });
+      } catch {
+        return;
+      }
+      const holder = document.createElement('div');
+      holder.innerHTML = renderKit(k);
+      const clue = holder.querySelector('.page.clues');
+      const sus = holder.querySelector('.page.suspects');
+      document.getElementById('demo-clue').replaceChildren(clue);
+      document.getElementById('demo-suspects').replaceChildren(sus);
+      document.getElementById('demo-walk').innerHTML = k.solution.walkthrough.map((l) => `<li>${esc(l)}</li>`).join('');
+      const params = new URLSearchParams({ kid, pet, adult });
+      document.getElementById('hero-cta').href = `app.html?${params}`;
+    }
+    form.addEventListener('input', update);
+    update();
+  </script>
+</body>
+</html>

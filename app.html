@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build your case · Sleuthhouse</title>
+  <meta name="description" content="Build a printable detective mystery set in your own home, starring your family, pets and toys.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/kit.css">
+</head>
+<body class="app-page">
+  <header class="nav">
+    <div class="wrap wide">
+      <a class="logo" href="index.html"><span>🦉</span>Sleuthhouse</a>
+      <nav class="nav-links">
+        <a href="index.html#how">How it works</a>
+        <span id="pro-status"></span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="builder-layout">
+    <aside class="builder" id="builder" aria-label="Case builder"></aside>
+
+    <section class="preview" aria-label="Printable kit preview">
+      <div class="preview-bar">
+        <div class="pv-info">
+          <div class="pv-title" id="pv-title">Building your case…</div>
+          <div class="pv-meta" id="pv-meta"></div>
+        </div>
+        <div class="pv-actions">
+          <button class="btn btn-small" data-action="reroll" type="button">🎲 New case</button>
+          <button class="btn btn-red" data-action="print" type="button">🖨️ Print kit / Save PDF</button>
+        </div>
+      </div>
+      <div class="locked-banner" id="locked-banner" hidden></div>
+      <div class="pv-error" id="pv-error" hidden></div>
+      <div class="kit-scale" id="kit-scale">
+        <div class="kit" id="kit"></div>
+      </div>
+      <div class="print-locked">
+        <h1>🦉 This case uses Pro features</h1>
+        <p>Unlock Sleuthhouse Pro to print it, or switch back to free options in the builder.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal-root"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

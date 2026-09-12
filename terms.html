@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terms &amp; privacy · Sleuthhouse</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+  <style>
+    .doc { max-width: 760px; margin: 40px auto 80px; padding: 0 20px; }
+    .doc h1 { font-family: var(--display); font-weight: 400; font-size: 2.4rem; margin-bottom: 4px; }
+    .doc h2 { font-size: 1.2rem; margin-top: 28px; }
+    .doc p, .doc li { color: var(--ink-2); }
+  </style>
+</head>
+<body>
+  <header class="nav"><div class="wrap"><a class="logo" href="index.html"><span>🦉</span>Sleuthhouse</a></div></header>
+  <main class="doc">
+    <h1>Terms &amp; privacy</h1>
+    <p>Last updated: September 2026</p>
+
+    <h2>Privacy</h2>
+    <p>Sleuthhouse builds every case inside your web browser. The names, rooms and details you type are stored only in your browser’s local storage so your draft is still there next time. They are never sent to our servers.</p>
+    <p>If you buy Pro, your license key is sent to our license check, which asks our payment provider whether it is valid. We do not receive or store your card details. The payment provider handles checkout under its own privacy policy.</p>
+
+    <h2>What you’re buying</h2>
+    <p>Sleuthhouse Pro is a one-time purchase that unlocks all case types, difficulty levels and suspect limits in the case builder for personal, family and classroom use. Printed kits are yours to use as many times as you like.</p>
+    <p>You may not resell Sleuthhouse-generated kits, or offer them as a paid service, without written permission.</p>
+
+    <h2>Refunds</h2>
+    <p>If Sleuthhouse doesn’t work for your family, email us within 14 days of purchase and we will refund you.</p>
+
+    <h2>Safety</h2>
+    <p>Grown-ups are responsible for choosing hiding spots that are safe for their children. Our suggested spots avoid appliances, medicines and high places, but always check your own home.</p>
+
+    <h2>Contact</h2>
+    <p>Questions? <a id="mail" href="mailto:hello@sleuthhouse.app">hello@sleuthhouse.app</a></p>
+  </main>
+  <script type="module">
+    import { CONFIG } from './js/config.js';
+    const a = document.getElementById('mail');
+    a.href = `mailto:${CONFIG.supportEmail}`;
+    a.textContent = CONFIG.supportEmail;
+  </script>
+</body>
+</html>
