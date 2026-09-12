@@ -94,6 +94,15 @@ export const CASES = {
     container: 'the freezer',
     hook: 'Someone opened {container} and took {item}. Detectives must move fast. This evidence is melting!',
   },
+  candy: {
+    id: 'candy',
+    icon: '🎃',
+    title: 'The Great Halloween Candy Heist',
+    item: 'the whole bucket of Halloween candy',
+    itemShort: 'candy',
+    container: 'the pumpkin bucket by the door',
+    hook: 'The costumes were ready and the trick-or-treating was done. But when everyone came back to count the loot, {item} had vanished from {container}. Only a single wrapper and a spooky silence remain.',
+  },
   crayon: {
     id: 'crayon',
     icon: '🖍️',

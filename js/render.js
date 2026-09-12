@@ -158,7 +158,7 @@ function notebook(k) {
         <thead><tr><th></th>${cat.values.map((v) => `<th><div class="vh"><span>${v.icon}</span>${esc(v.name)}</div></th>`).join('')}</tr></thead>
         <tbody>${k.suspects.map((s) => `<tr><th>${s.icon} ${esc(s.name)}</th>${cat.values.map(() => '<td></td>').join('')}</tr>`).join('')}</tbody>
       </table></div>
-    </div>`).join('');
+    </div>`);
 
   const gridHelp = hidden.length
     ? `<p class="small">Logic grid tip: put an <b>✗</b> in a box when something is impossible, and a <b>✓</b> when you are sure. Each row gets one ✓, and so does each column!</p>`
@@ -179,11 +179,13 @@ function notebook(k) {
 
   const log = `<h3>Clue log</h3><div class="lines">${k.cards.map((c) => `<div class="line"><b>Card ${c.number}</b></div>`).join('')}</div>`;
 
-  const first = page(`${head}${checklist}${gridHelp}${grids}`, { cls: 'notebook', label: 'Detective notebook' });
+  // One grid fits under the checklist; any further grids move to the second page.
+  const first = page(`${head}${checklist}${gridHelp}${grids[0] || ''}`, { cls: 'notebook', label: 'Detective notebook' });
   const second = page(`
+    ${grids.slice(1).join('')}
     ${keys.length ? `<h2 class="section-title">Code-Breaker Keys</h2><div class="keys">${keys.join('')}</div>` : ''}
     ${log}
-  `, { cls: 'notebook', label: 'Detective notebook' });
+  `, { cls: 'notebook', label: 'Detective notebook (2)' });
   return first + second;
 }
 

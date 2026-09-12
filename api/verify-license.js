@@ -1,11 +1,23 @@
 // Vercel serverless function: POST { key } → { valid, message }
 //
 // Environment variables (set in Vercel → Project → Settings → Environment Variables):
-//   LICENSE_PROVIDER     "gumroad" (default) or "lemonsqueezy"
+//   LICENSE_PROVIDER     "codes" (default), "gumroad" or "lemonsqueezy"
+//   LICENSE_SECRET       for "codes": the secret used by scripts/make-license.mjs
+//   REVOKED_CODES        for "codes": optional comma-separated codes to block (refunds)
 //   GUMROAD_PRODUCT_ID   Gumroad product ID (Product → Content → License key section)
 //   LEMON_STORE_ID       optional: only accept Lemon Squeezy keys from this store
 //   MAX_ACTIVATIONS      optional: devices per key before refusing (default 5)
 //   OWNER_KEY            optional: a private key of your own that always unlocks Pro
+
+import { checkCode } from './license-codes.js';
+
+function verifyCode(key) {
+  const secret = process.env.LICENSE_SECRET;
+  if (!secret) return { valid: false, message: 'Store is not configured yet (LICENSE_SECRET).' };
+  const revoked = (process.env.REVOKED_CODES || '').toUpperCase().split(',').map((s) => s.trim()).filter(Boolean);
+  if (revoked.includes(key.toUpperCase())) return { valid: false, message: 'This code has been cancelled.' };
+  return checkCode(secret, key) ? { valid: true } : { valid: false, message: 'That license code was not recognised.' };
+}
 
 async function verifyGumroad(key) {
   const productId = process.env.GUMROAD_PRODUCT_ID;
@@ -59,8 +71,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const provider = (process.env.LICENSE_PROVIDER || 'gumroad').toLowerCase();
-    const result = provider === 'lemonsqueezy' ? await verifyLemonSqueezy(key) : await verifyGumroad(key);
+    const provider = (process.env.LICENSE_PROVIDER || 'codes').toLowerCase();
+    let result;
+    if (provider === 'lemonsqueezy') result = await verifyLemonSqueezy(key);
+    else if (provider === 'gumroad') result = await verifyGumroad(key);
+    else result = verifyCode(key);
     res.status(200).json(result);
   } catch {
     res.status(502).json({ valid: false, message: 'License server is busy. Please try again in a minute.' });
