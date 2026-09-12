@@ -179,14 +179,17 @@ function notebook(k) {
 
   const log = `<h3>Clue log</h3><div class="lines">${k.cards.map((c) => `<div class="line"><b>Card ${c.number}</b></div>`).join('')}</div>`;
 
-  // One grid fits under the checklist; any further grids move to the second page.
-  const first = page(`${head}${checklist}${gridHelp}${grids[0] || ''}`, { cls: 'notebook', label: 'Detective notebook' });
-  const second = page(`
-    ${grids.slice(1).join('')}
-    ${keys.length ? `<h2 class="section-title">Code-Breaker Keys</h2><div class="keys">${keys.join('')}</div>` : ''}
-    ${log}
-  `, { cls: 'notebook', label: 'Detective notebook (2)' });
-  return first + second;
+  // One grid fits under the checklist. Extra grids share page 2 with the clue log,
+  // and the code keys then get a page of their own.
+  const keysHtml = keys.length ? `<h2 class="section-title">Code-Breaker Keys</h2><div class="keys">${keys.join('')}</div>` : '';
+  const out = [page(`${head}${checklist}${gridHelp}${grids[0] || ''}`, { cls: 'notebook', label: 'Detective notebook' })];
+  if (grids.length > 1) {
+    out.push(page(`${grids.slice(1).join('')}${log}`, { cls: 'notebook', label: 'Detective notebook (2)' }));
+    if (keysHtml) out.push(page(keysHtml, { cls: 'notebook', label: 'Code-breaker keys' }));
+  } else {
+    out.push(page(`${keysHtml}${log}`, { cls: 'notebook', label: 'Detective notebook (2)' }));
+  }
+  return out.join('');
 }
 
 function clueCards(k) {
