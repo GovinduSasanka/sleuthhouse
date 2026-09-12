@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sleuthhouse sample kit · The Case of the Vanished Cookies</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+<style>body{margin:0;padding:24px 0;background:#e9dfcc}@media(max-width:820px){.kit{zoom:.47}}/* Printable kit. Pages are 210mm wide × 270mm tall so they fit both A4 and US Letter. */
+
+.kit {
+  --ink: #1f1a17;
+  --paper: #fffdf7;
+  --kraft: #efe3c8;
+  --red: #c8372d;
+  --blue: #2a5d9f;
+  --muted: #6b6259;
+  --line: #d8ccb4;
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--ink);
+}
+
+.kit .page {
+  position: relative;
+  width: 210mm;
+  min-height: 270mm;
+  box-sizing: border-box;
+  padding: 13mm 14mm 16mm;
+  margin: 0 auto 28px;
+  background: var(--paper);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 10px 30px rgba(60, 40, 20, .12);
+  font-size: 11pt;
+  line-height: 1.45;
+  overflow: hidden;
+}
+
+.kit h1, .kit h2, .kit h3, .kit h4 { font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; margin: 0 0 .4em; line-height: 1.15; }
+.kit .title { font-size: 25pt; margin-bottom: 4px; }
+.kit h3 { font-size: 13.5pt; margin-top: 14px; border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; }
+.kit h4 { font-size: 11pt; }
+.kit .section-title { font-size: 20pt; }
+.kit .section-title small { font-family: 'Nunito', sans-serif; font-size: 9pt; color: var(--muted); margin-left: 8px; }
+.kit .lede { color: var(--muted); margin: 0 0 8px; }
+.kit .small { font-size: 9pt; color: var(--muted); }
+.kit .mono { font-family: 'Special Elite', monospace; letter-spacing: .06em; }
+.kit p { margin: 0 0 .6em; }
+
+.kit .page-foot {
+  position: absolute; left: 14mm; right: 14mm; bottom: 7mm;
+  display: flex; justify-content: space-between;
+  font-size: 8pt; color: var(--muted); border-top: 1px solid var(--line); padding-top: 3px;
+}
+
+.kit .stamp {
+  display: inline-block; font-family: 'Special Elite', monospace; font-size: 10pt; letter-spacing: .12em;
+  border: 2.5px solid currentColor; padding: 3px 10px; border-radius: 4px; transform: rotate(-2deg); margin-bottom: 8px;
+}
+.kit .stamp-red { color: var(--red); }
+.kit .stamp-blue { color: var(--blue); transform: rotate(4deg); }
+
+.kit .cols { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; }
+.kit .steps, .kit .bullets { padding-left: 18px; margin: 0; font-size: 10pt; }
+.kit .steps li, .kit .bullets li { margin-bottom: 5px; }
+
+.kit table { border-collapse: collapse; width: 100%; }
+.kit .hide-table th, .kit .hide-table td, .kit .truth th, .kit .truth td { border: 1px solid var(--line); padding: 5px 6px; text-align: left; vertical-align: top; font-size: 9.5pt; }
+.kit .hide-table thead th, .kit .truth thead th { background: var(--kraft); font-family: 'Special Elite', monospace; font-weight: 400; }
+.kit .hide-table .num { font-family: 'Special Elite', monospace; font-size: 14pt; text-align: center; width: 34px; }
+.kit .hide-table .small { font-size: 8.5pt; }
+.kit .truth tr.guilty th, .kit .truth tr.guilty td { background: #fbe3df; font-weight: 700; }
+
+/* Mission letter */
+.kit .letterhead { display: flex; align-items: center; gap: 12px; border-bottom: 3px double var(--ink); padding-bottom: 8px; margin-bottom: 12px; }
+.kit .mascot { font-size: 38pt; line-height: 1; }
+.kit .agency { font-family: 'Special Elite', monospace; font-size: 15pt; letter-spacing: .08em; }
+.kit .from { color: var(--muted); font-size: 9.5pt; }
+.kit .letterhead .stamp { margin-left: auto; font-size: 15pt; }
+.kit .case-title { font-size: 22pt; }
+.kit .letter { font-size: 11.5pt; }
+.kit .suspect-line { font-weight: 700; background: var(--kraft); padding: 6px 10px; border-radius: 6px; }
+.kit .sign { font-family: 'Special Elite', monospace; margin-top: 10px; }
+.kit .sign span { font-family: 'Nunito', sans-serif; font-size: 9pt; color: var(--muted); }
+.kit .first-clue { margin-top: 10px; }
+
+/* Puzzles */
+.kit .puzzle { border: 2px dashed var(--ink); border-radius: 10px; padding: 10px 12px; background: #fff; }
+.kit .puzzle-lead { font-family: 'Special Elite', monospace; font-size: 13pt; }
+.kit .puzzle-how { font-size: 10pt; margin: 2px 0 6px; }
+.kit .riddle { font-size: 13pt; font-style: italic; margin: 6px 0; }
+.kit .puzzle-hint, .kit .stuck { font-size: 9pt; color: var(--muted); }
+.kit .code { font-family: 'Special Elite', monospace; font-size: 20pt; letter-spacing: .18em; margin: 4px 0 8px; word-break: break-word; }
+.kit .code-emoji { letter-spacing: .05em; font-size: 20pt; }
+.kit .code-a1z26 { font-size: 15pt; letter-spacing: .04em; }
+.kit .code-pigpen { display: flex; gap: 6px; flex-wrap: wrap; }
+.kit .pigpen { color: var(--ink); }
+.kit .boxes { display: flex; gap: 5px; flex-wrap: wrap; }
+.kit .boxes span { width: 24px; height: 28px; border-bottom: 2px solid var(--ink); }
+.kit .puzzle.last { background: #fff6d6; }
+
+/* Cut-out cards */
+.kit .cut { border: 1.5px dashed #9a8f80; border-radius: 10px; position: relative; }
+.kit .cut::before { content: '✂'; position: absolute; top: -10px; left: 12px; background: var(--paper); font-size: 11px; color: #9a8f80; padding: 0 3px; }
+
+.kit .grid-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.kit .suspect { padding: 10px 12px; min-height: 72mm; box-sizing: border-box; background: #fff; }
+.kit .suspect-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.kit .suspect-icon { font-size: 40pt; line-height: 1; }
+.kit .suspect-tag { font-family: 'Special Elite', monospace; color: var(--red); border: 2px solid var(--red); padding: 1px 6px; font-size: 9pt; transform: rotate(5deg); }
+.kit .suspect-name { font-family: 'Special Elite', monospace; font-size: 18pt; margin: 4px 0; }
+.kit .suspect-known { font-size: 9.5pt; margin-bottom: 6px; }
+.kit .suspect-facts { list-style: none; padding: 6px 8px; margin: 0; background: var(--kraft); border-radius: 6px; font-size: 10pt; }
+.kit .suspect-facts li span { margin-right: 4px; }
+.kit .suspect-facts.unknown { color: var(--muted); }
+
+/* Notebook */
+.kit .nb-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.kit .nb-owner { font-family: 'Special Elite', monospace; }
+.kit .checklist { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 10px; }
+.kit .check { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 10.5pt; }
+.kit .box { display: inline-block; width: 15px; height: 15px; border: 2px solid var(--ink); border-radius: 3px; flex: none; }
+.kit .ci { font-size: 15pt; }
+.kit .grid-block { margin-top: 6px; }
+.kit .logic th, .kit .logic td { border: 1px solid var(--ink); font-size: 8.5pt; }
+.kit .logic td { height: 22px; min-width: 22px; }
+.kit .logic tbody th { text-align: left; padding: 2px 6px; white-space: nowrap; font-size: 9.5pt; }
+.kit .logic thead th { padding: 3px 2px; font-weight: 600; vertical-align: bottom; }
+.kit .vh { display: flex; flex-direction: column; align-items: center; gap: 1px; line-height: 1.1; }
+.kit .vh span { font-size: 13pt; }
+.kit .keys { display: grid; gap: 10px; }
+.kit .key { border: 1.5px solid var(--ink); border-radius: 8px; padding: 8px 10px; }
+.kit .key-grid { display: grid; grid-template-columns: repeat(13, 1fr); gap: 4px; text-align: center; font-family: 'Special Elite', monospace; font-size: 9pt; }
+.kit .key-grid span { display: flex; flex-direction: column; align-items: center; }
+.kit .key-grid i { font-style: normal; font-size: 14pt; }
+.kit .strip { display: grid; grid-template-columns: repeat(26, 1fr); text-align: center; border: 1px solid var(--ink); }
+.kit .strip span { border-right: 1px solid var(--line); display: flex; flex-direction: column; font-size: 9pt; }
+.kit .strip b { font-family: 'Special Elite', monospace; font-weight: 400; font-size: 11pt; }
+.kit .strip i { font-style: normal; color: var(--muted); font-size: 7.5pt; }
+.kit .lines .line { border-bottom: 1px solid var(--line); height: 30px; display: flex; align-items: flex-end; font-size: 9pt; }
+
+/* Clue cards */
+.kit .clue-stack { display: grid; gap: 12px; }
+.kit .clue-card { padding: 12px 14px; background: #fff; min-height: 116mm; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; }
+.kit .clue-head { display: flex; align-items: baseline; gap: 8px; border-bottom: 2px solid var(--ink); padding-bottom: 4px; }
+.kit .clue-num { font-family: 'Special Elite', monospace; font-size: 22pt; color: var(--red); }
+.kit .clue-of { color: var(--muted); }
+.kit .clue-case { margin-left: auto; font-size: 22pt; }
+.kit .clue-list { margin: 0; padding: 0; list-style: none; font-size: 12.5pt; display: grid; gap: 7px; flex: 1; }
+
+/* Finale */
+.kit .accuse { border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; }
+.kit .big-line { font-size: 13pt; }
+.kit .suspect-pick { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 4px 0 10px; font-weight: 700; }
+.kit .pick { display: flex; align-items: center; gap: 6px; }
+.kit .blank { display: inline-block; min-width: 60mm; border-bottom: 1.5px solid var(--ink); height: 1.1em; }
+.kit .blank.short { min-width: 14mm; }
+.kit .signatures { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 8px; }
+.kit .signatures div { display: flex; flex-direction: column; }
+.kit .cert { margin-top: 12px; padding: 6px; border: 3px solid var(--ink); border-radius: 12px; }
+.kit .cert-inner { border: 1.5px solid var(--ink); border-radius: 8px; padding: 10px 16px; text-align: center; background: repeating-linear-gradient(45deg, #fffaf0, #fffaf0 8px, #fff5e1 8px, #fff5e1 16px); }
+.kit .cert-icon { font-size: 30pt; line-height: 1; }
+.kit .cert-kicker { font-family: 'Special Elite', monospace; letter-spacing: .1em; font-size: 10pt; color: var(--muted); }
+.kit .cert-title { font-family: 'Special Elite', monospace; font-size: 20pt; margin: 2px 0 6px; }
+.kit .cert-names { font-family: 'Special Elite', monospace; font-size: 22pt; color: var(--blue); margin: 2px 0 6px; }
+.kit .cert-sign { display: flex; justify-content: space-between; font-family: 'Special Elite', monospace; margin-top: 8px; font-size: 10pt; }
+.kit .badges { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.kit .badge { width: 44mm; height: 44mm; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #fff; }
+.kit .badge::before { left: 50%; }
+.kit .badge-star { font-size: 26pt; color: #d9a21b; line-height: 1; }
+.kit .badge-rank { font-family: 'Special Elite', monospace; font-size: 8.5pt; }
+.kit .badge-name { font-weight: 800; font-size: 11pt; padding: 0 6px; }
+
+/* Solution */
+.kit .confession { background: #fbe3df; border-left: 5px solid var(--red); padding: 8px 12px; border-radius: 6px; margin: 8px 0; }
+.kit .confession-label { font-size: 9pt; color: var(--muted); }
+.kit .confession p { font-size: 13pt; font-style: italic; margin: 2px 0 0; }
+.kit .walk { font-size: 9.5pt; padding-left: 20px; margin: 0; columns: 1; }
+.kit .walk li { margin-bottom: 2px; }
+
+@media print {
+  @page { margin: 0; }
+  body * { visibility: hidden; }
+  .kit, .kit * { visibility: visible; }
+  .kit { position: absolute; left: 0; top: 0; }
+  .kit .page { margin: 0; box-shadow: none; break-after: page; page-break-after: always; }
+  .kit .page:last-child { break-after: auto; page-break-after: auto; }
+  .kit .cut, .kit table, .kit .puzzle, .kit .cert { break-inside: avoid; }
+  .kit { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head><body><div class="kit"><section class="page parent" data-label="Parents only">
+    
+    <div class="stamp stamp-red">TOP SECRET · GROWN-UPS ONLY</div>
+    <h1 class="title">Parents’ Secret Briefing</h1>
+    <p class="lede">The Case of the Vanished Cookies · Junior Inspector (Ages 8–10) · about 30–45 minutes · Case no. <span class="mono">SAMPLE-1</span></p>
+
+    <div class="cols">
+      <div>
+        <h3>Setup (10 minutes)</h3>
+        <ol class="steps">
+          <li>Print every page. Keep this page and the <b>Solution</b> page away from the detectives.</li>
+          <li>Cut out the <b>clue cards</b> and <b>suspect cards</b> along the dashed lines.</li>
+          <li>Hide clue cards <b>1 to 5</b> in the spots in the table below. Folding them in half helps.</li>
+          <li>Hand the detectives the <b>Mission Letter</b>, the <b>suspect cards</b>, the <b>Detective Notebook</b> and a pencil.</li>
+          <li>Read the Mission Letter out loud, dramatically. Then let the hunt begin!</li>
+          <li>When they’re ready, they fill in the <b>Accusation</b>. Check it against the Solution and read the confession out loud.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Good to know</h3>
+        <ul class="bullets">
+          <li><b>Every clue is true.</b> The case was checked by a logic solver: there is exactly one possible thief, and no card gives it away early.</li>
+          <li>Detectives only need the clues. Nothing depends on luck or guessing.</li>
+          <li>Players in the case can play too! The suspects are only pretend.</li>
+          <li>Stuck detectives? Read out a hint from the right-hand column of the table below.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Where to hide each clue card</h3>
+    <div class="table-wrap"><table class="hide-table">
+      <thead><tr><th>Card</th><th>Hide it…</th><th>Room</th><th>Code answer</th><th>Hint riddle</th></tr></thead>
+      <tbody><tr>
+      <td class="num">1</td>
+      <td><b>under a pillow</b></td>
+      <td>Bedroom</td>
+      <td class="mono">PILLOW</td>
+      <td class="small">At night your head rests on my back. Look underneath me for the next track.</td>
+    </tr><tr>
+      <td class="num">2</td>
+      <td><b>inside the teapot (empty and cold!)</b></td>
+      <td>Kitchen</td>
+      <td class="mono">TEAPOT</td>
+      <td class="small">I am short and stout, with a handle and a spout.</td>
+    </tr><tr>
+      <td class="num">3</td>
+      <td><b>behind a picture frame</b></td>
+      <td>Living Room</td>
+      <td class="mono">PICTURE</td>
+      <td class="small">I hold a smile that never moves. Peek behind me for the proof.</td>
+    </tr><tr>
+      <td class="num">4</td>
+      <td><b>behind the cereal box</b></td>
+      <td>Kitchen</td>
+      <td class="mono">CEREAL</td>
+      <td class="small">Crunchy flakes for breakfast time. Look behind the box to find the rhyme.</td>
+    </tr><tr>
+      <td class="num">5</td>
+      <td><b>hanging in the wardrobe</b></td>
+      <td>Bedroom</td>
+      <td class="mono">WARDROBE</td>
+      <td class="small">Your clothes hang out in me all day. Open my doors and look this way.</td>
+    </tr></tbody>
+    </table></div>
+  
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Parents only</span></footer>
+  </section>
+<section class="page mission" data-label="Mission letter">
+    
+    <div class="letterhead">
+      <div class="mascot">🦉</div>
+      <div>
+        <div class="agency">SLEUTHHOUSE DETECTIVE AGENCY</div>
+        <div class="from">From the desk of Chief Inspector Hoot</div>
+      </div>
+      <div class="stamp stamp-blue">URGENT</div>
+    </div>
+    <h1 class="title case-title">🍪 The Case of the Vanished Cookies</h1>
+    <div class="letter">
+      <p>Dear Junior Inspector Nila &amp; Kavin,</p>
+      <p>We have a serious situation in your house. At exactly 3:15 this afternoon, someone lifted the lid of the cookie jar, and the last chocolate-chip cookies disappeared. Only crumbs and a guilty silence remain.</p>
+      <p>The crime happened in the <b>Living Room</b>. Our investigation shows that the thief must be one of these 5 suspects:</p>
+      <p class="suspect-line">👩 Mum · 👨 Dad · 👵 Grandma · 🐶 Biscuit · 🧸 Mr Fluff</p>
+      <p>I have hidden <b>5 clue cards</b> around the house. Each clue card tells you something true about the case and shows you where to find the next one. Use your <b>Detective Notebook</b> to cross off suspects as you go.</p>
+      <p>When you have found every card and only one suspect is left, fill in the Accusation form. Choose carefully. A good detective never guesses!</p>
+      <p>The whole house is counting on you.</p>
+      <p class="sign">Chief Inspector Hoot 🦉<br><span>Chief of Sleuthhouse Detective Agency</span></p>
+    </div>
+    <div class="first-clue">
+      <div class="puzzle">
+    <div class="puzzle-lead">Your first clue is hidden…</div>
+    <div class="puzzle-how">This word is written backwards:</div>
+    <div class="code code-backwards">WOLLIP</div>
+    <div class="boxes"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="stuck">Stuck? Ask a grown-up to read the secret riddle on their sheet.</div>
+  </div>
+    </div>
+  
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Mission letter</span></footer>
+  </section>
+<section class="page suspects" data-label="Suspect cards">
+    
+      <h2 class="section-title">Suspect Cards <small>cut along the dashed lines</small></h2>
+      <div class="grid-cards"><div class="suspect cut">
+      <div class="suspect-top"><span class="suspect-icon">👩</span><span class="suspect-tag">SUSPECT</span></div>
+      <div class="suspect-name">Mum</div>
+      <div class="suspect-known"><b>Known for:</b> Has been caught humming while tiptoeing.</div>
+      <ul class="suspect-facts"><li><span>🌷</span><b>Room:</b> Garden</li></ul>
+    </div><div class="suspect cut">
+      <div class="suspect-top"><span class="suspect-icon">👨</span><span class="suspect-tag">SUSPECT</span></div>
+      <div class="suspect-name">Dad</div>
+      <div class="suspect-known"><b>Known for:</b> Has a laugh you can hear from space.</div>
+      <ul class="suspect-facts"><li><span>🍳</span><b>Room:</b> Kitchen</li></ul>
+    </div><div class="suspect cut">
+      <div class="suspect-top"><span class="suspect-icon">👵</span><span class="suspect-tag">SUSPECT</span></div>
+      <div class="suspect-name">Grandma</div>
+      <div class="suspect-known"><b>Known for:</b> Claims to be &quot;just looking&quot; in the fridge.</div>
+      <ul class="suspect-facts"><li><span>🛏️</span><b>Room:</b> Bedroom</li></ul>
+    </div><div class="suspect cut">
+      <div class="suspect-top"><span class="suspect-icon">🐶</span><span class="suspect-tag">SUSPECT</span></div>
+      <div class="suspect-name">Biscuit</div>
+      <div class="suspect-known"><b>Known for:</b> Has never once said sorry.</div>
+      <ul class="suspect-facts"><li><span>🛁</span><b>Room:</b> Bathroom</li></ul>
+    </div><div class="suspect cut">
+      <div class="suspect-top"><span class="suspect-icon">🧸</span><span class="suspect-tag">SUSPECT</span></div>
+      <div class="suspect-name">Mr Fluff</div>
+      <div class="suspect-known"><b>Known for:</b> Has a smile that is a little too calm.</div>
+      <ul class="suspect-facts"><li><span>🛋️</span><b>Room:</b> Living Room</li></ul>
+    </div></div>
+    
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Suspect cards</span></footer>
+  </section>
+<section class="page notebook" data-label="Detective notebook">
+    <div class="nb-head"><h2 class="section-title">Detective Notebook</h2><div class="nb-owner">Property of: Nila &amp; Kavin</div></div><h3>Suspect checklist</h3>
+    <p class="small">When a clue proves a suspect is innocent, cross them out!</p>
+    <div class="checklist"><div class="check"><span class="box"></span><span class="ci">👩</span>Mum</div><div class="check"><span class="box"></span><span class="ci">👨</span>Dad</div><div class="check"><span class="box"></span><span class="ci">👵</span>Grandma</div><div class="check"><span class="box"></span><span class="ci">🐶</span>Biscuit</div><div class="check"><span class="box"></span><span class="ci">🧸</span>Mr Fluff</div></div><p class="small">Logic grid tip: put an <b>✗</b> in a box when something is impossible, and a <b>✓</b> when you are sure. Each row gets one ✓, and so does each column!</p><div class="grid-block">
+      <h3>🎲 What were they doing?</h3>
+      <div class="table-wrap"><table class="logic">
+        <thead><tr><th></th><th><div class="vh"><span>📖</span>reading a comic</div></th><th><div class="vh"><span>🥁</span>playing the drum</div></th><th><div class="vh"><span>🖍️</span>drawing pictures</div></th><th><div class="vh"><span>🎵</span>humming a song</div></th><th><div class="vh"><span>🧱</span>building with blocks</div></th></tr></thead>
+        <tbody><tr><th>👩 Mum</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>👨 Dad</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>👵 Grandma</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>🐶 Biscuit</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>🧸 Mr Fluff</th><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+      </table></div>
+    </div>
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Detective notebook</span></footer>
+  </section><section class="page notebook" data-label="Detective notebook (2)">
+    <h2 class="section-title">Code-Breaker Keys</h2><div class="keys"><div class="key"><h4>Emoji Code</h4><div class="key-grid"><span><i>🍎</i>A</span><span><i>🐝</i>B</span><span><i>🐱</i>C</span><span><i>🐶</i>D</span><span><i>🥚</i>E</span><span><i>🐸</i>F</span><span><i>🍇</i>G</span><span><i>🏠</i>H</span><span><i>🍦</i>I</span><span><i>🧃</i>J</span><span><i>🔑</i>K</span><span><i>🍋</i>L</span><span><i>🌙</i>M</span><span><i>👃</i>N</span><span><i>🐙</i>O</span><span><i>🐧</i>P</span><span><i>👑</i>Q</span><span><i>🌈</i>R</span><span><i>⭐</i>S</span><span><i>🌳</i>T</span><span><i>☂️</i>U</span><span><i>🎻</i>V</span><span><i>🐋</i>W</span><span><i>❌</i>X</span><span><i>🪀</i>Y</span><span><i>⚡</i>Z</span></div></div></div><h3>Clue log</h3><div class="lines"><div class="line"><b>Card 1</b></div><div class="line"><b>Card 2</b></div><div class="line"><b>Card 3</b></div><div class="line"><b>Card 4</b></div><div class="line"><b>Card 5</b></div></div>
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Detective notebook (2)</span></footer>
+  </section>
+<section class="page clues" data-label="Clue cards: cut out and hide">
+    <div class="clue-stack"><div class="clue-card cut">
+      <div class="clue-head"><span class="clue-num">CLUE 1</span><span class="clue-of">of 5</span><span class="clue-case">🍪</span></div>
+      <ul class="clue-list"><li>🔍 We searched everywhere for a fuzzy blanket hair but found none. So the thief had NOT come from the Bedroom.</li></ul>
+      <div class="puzzle">
+    <div class="puzzle-lead">Your next clue is hidden…</div>
+    <div class="puzzle-how">This word is written backwards:</div>
+    <div class="code code-backwards">TOPAET</div>
+    <div class="boxes"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="stuck">Stuck? Ask a grown-up to read the secret riddle on their sheet.</div>
+  </div>
+    </div><div class="clue-card cut">
+      <div class="clue-head"><span class="clue-num">CLUE 2</span><span class="clue-of">of 5</span><span class="clue-case">🍪</span></div>
+      <ul class="clue-list"><li>🗒️ Grandma was either drawing pictures or building with blocks.</li></ul>
+      <div class="puzzle">
+    <div class="puzzle-lead">Your next clue is hidden…</div>
+    <div class="puzzle-how">Crack the Emoji Code (key in your notebook):</div>
+    <div class="code code-emoji">🐧 🍦 🐱 🌳 ☂️ 🌈 🥚</div>
+    <div class="boxes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="stuck">Stuck? Ask a grown-up to read the secret riddle on their sheet.</div>
+  </div>
+    </div></div>
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Clue cards: cut out and hide</span></footer>
+  </section><section class="page clues" data-label="Clue cards: cut out and hide">
+    <div class="clue-stack"><div class="clue-card cut">
+      <div class="clue-head"><span class="clue-num">CLUE 3</span><span class="clue-of">of 5</span><span class="clue-case">🍪</span></div>
+      <ul class="clue-list"><li>🗒️ Grandma was either building with blocks or humming a song.</li></ul>
+      <div class="puzzle">
+    <div class="puzzle-lead">Your next clue is hidden…</div>
+    <div class="puzzle-how">Crack the Emoji Code (key in your notebook):</div>
+    <div class="code code-emoji">🐱 🥚 🌈 🥚 🍎 🍋</div>
+    <div class="boxes"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="stuck">Stuck? Ask a grown-up to read the secret riddle on their sheet.</div>
+  </div>
+    </div><div class="clue-card cut">
+      <div class="clue-head"><span class="clue-num">CLUE 4</span><span class="clue-of">of 5</span><span class="clue-case">🍪</span></div>
+      <ul class="clue-list"><li>🗒️ Dad was either drawing pictures or building with blocks.</li></ul>
+      <div class="puzzle">
+    <div class="puzzle-lead">Your next clue is hidden…</div>
+    <div class="puzzle-how">Crack the Emoji Code (key in your notebook):</div>
+    <div class="code code-emoji">🐋 🍎 🌈 🐶 🌈 🐙 🐝 🥚</div>
+    <div class="boxes"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="stuck">Stuck? Ask a grown-up to read the secret riddle on their sheet.</div>
+  </div>
+    </div></div>
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Clue cards: cut out and hide</span></footer>
+  </section><section class="page clues" data-label="Clue cards: cut out and hide">
+    <div class="clue-stack"><div class="clue-card cut">
+      <div class="clue-head"><span class="clue-num">CLUE 5</span><span class="clue-of">of 5</span><span class="clue-case">🍪</span></div>
+      <ul class="clue-list"><li>🔍 Messy smudges were found on the handle. That means the thief had been doing something messy.</li></ul>
+      <div class="puzzle last"><div class="puzzle-lead">That was the LAST clue!</div><p>Look at your notebook. Only one suspect should be left. Fill in the Accusation form and present your case!</p></div>
+    </div></div>
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Clue cards: cut out and hide</span></footer>
+  </section>
+<section class="page finale" data-label="Accusation &amp; certificate">
+    
+    <div class="accuse">
+      <h2 class="section-title">Official Accusation</h2>
+      <p class="big-line">We, Junior Inspectors Nila &amp; Kavin, accuse</p>
+      <div class="suspect-pick"><span class="pick"><span class="box"></span>👩 Mum</span><span class="pick"><span class="box"></span>👨 Dad</span><span class="pick"><span class="box"></span>👵 Grandma</span><span class="pick"><span class="box"></span>🐶 Biscuit</span><span class="pick"><span class="box"></span>🧸 Mr Fluff</span></div>
+      <p class="big-line">of taking the last chocolate-chip cookies.</p>
+      <p>Our most important clue was card number <span class="blank short"></span> because <span class="blank"></span></p>
+      <div class="signatures"><div><span class="blank"></span><small>Signed, Detective Nila</small></div><div><span class="blank"></span><small>Signed, Detective Kavin</small></div></div>
+    </div>
+    <div class="cert">
+      <div class="cert-inner">
+        <div class="cert-icon">🦉</div>
+        <div class="cert-kicker">Sleuthhouse Detective Agency</div>
+        <div class="cert-title">Certificate of Excellent Detecting</div>
+        <p>This certifies that</p>
+        <div class="cert-names">Nila &amp; Kavin</div>
+        <p>solved <b>The Case of the Vanished Cookies</b> using logic, teamwork and very sharp eyes, and are hereby promoted to <b>Junior Inspector</b>.</p>
+        <div class="cert-sign"><span>Chief Inspector Hoot</span><span>Date: ______________</span></div>
+      </div>
+    </div>
+    <div class="badges"><div class="badge cut"><div class="badge-star">★</div><div class="badge-rank">Junior Inspector</div><div class="badge-name">Nila</div></div><div class="badge cut"><div class="badge-star">★</div><div class="badge-rank">Junior Inspector</div><div class="badge-name">Kavin</div></div></div>
+  
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Accusation &amp; certificate</span></footer>
+  </section>
+<section class="page solution" data-label="Parents only: solution">
+    
+    <div class="stamp stamp-red">SOLUTION · DO NOT SHOW DETECTIVES</div>
+    <h1 class="title">The thief was… 👨 Dad!</h1>
+    <div class="confession">
+      <div class="confession-label">Read the confession out loud, in Dad’s voice:</div>
+      <p>“I was going to share! Eventually. Probably. Okay, maybe not.”</p>
+    </div>
+    <h3>What really happened</h3>
+    <div class="table-wrap"><table class="truth"><thead><tr><th>Suspect</th><th>🚪 Room</th><th>🎲 Doing</th></tr></thead><tbody><tr class=""><th>👩 Mum</th><td>🌷 Garden</td><td>🥁 playing the drum</td></tr><tr class="guilty"><th>👨 Dad</th><td>🍳 Kitchen</td><td>🖍️ drawing pictures</td></tr><tr class=""><th>👵 Grandma</th><td>🛏️ Bedroom</td><td>🧱 building with blocks</td></tr><tr class=""><th>🐶 Biscuit</th><td>🛁 Bathroom</td><td>📖 reading a comic</td></tr><tr class=""><th>🧸 Mr Fluff</th><td>🛋️ Living Room</td><td>🎵 humming a song</td></tr></tbody></table></div>
+    <h3>How detectives can prove it</h3>
+    <ol class="walk"><li>Clue card 1 → Grandma can&#39;t be the thief.</li><li>Clue card 3 → Grandma was building with blocks.</li><li>By elimination → Dad was drawing pictures.</li><li>Clue card 5 → Mum can&#39;t be the thief.</li><li>Clue card 5 → Biscuit can&#39;t be the thief.</li><li>Clue card 5 → Mr Fluff can&#39;t be the thief.</li><li>Only Dad is left, so Dad is the thief!</li></ol>
+  
+    <footer class="page-foot"><span>🦉 Sleuthhouse</span><span>Parents only: solution</span></footer>
+  </section></div></body></html>
