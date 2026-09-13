@@ -12,9 +12,11 @@
 import { createRng } from './rng.js';
 import { solve, clueHolds, popcount } from './solver.js';
 import {
-  CASES, CATEGORY_POOL, ROOM_OPTIONS, ROOM_TRACES, SPOTS, KNOWN_FOR, CONFESSIONS,
+  CASES, CATEGORY_POOL, ROOM_OPTIONS, SCHOOL_ROOMS, ROOM_TRACES, SPOTS, KNOWN_FOR, CONFESSIONS,
   DIFFICULTIES, SUSPECT_KINDS,
 } from './content.js';
+
+const ALL_ROOMS = [...ROOM_OPTIONS, ...SCHOOL_ROOMS];
 import { encodeKeyword } from './ciphers.js';
 
 export const LIMITS = { minSuspects: 3, maxSuspects: 8 };
@@ -61,7 +63,9 @@ export function normalizeInput(input = {}) {
     if (!name || seen.has(name.toLowerCase())) continue;
     seen.add(name.toLowerCase());
     const kind = SUSPECT_KINDS[raw.kind] ? raw.kind : 'person';
-    suspects.push({ name, kind, icon: raw.icon || SUSPECT_KINDS[kind].icons[0] });
+    // Icons are printed as raw HTML, so only accept ones from our own lists.
+    const icon = Object.values(SUSPECT_KINDS).some((k) => k.icons.includes(raw.icon)) ? raw.icon : SUSPECT_KINDS[kind].icons[0];
+    suspects.push({ name, kind, icon });
   }
   if (suspects.length < LIMITS.minSuspects) {
     throw new Error(`A case needs at least ${LIMITS.minSuspects} suspects with different names.`);
@@ -88,7 +92,12 @@ export function normalizeInput(input = {}) {
     })
     .filter(Boolean);
 
+  const isSchoolRoom = (r) => SCHOOL_ROOMS.some((o) => o.name === r);
+  const isHomeRoom = (r) => ROOM_OPTIONS.some((o) => o.name === r);
+  const setting = rooms.some(isSchoolRoom) && !rooms.some(isHomeRoom) ? 'school' : 'home';
+
   return {
+    setting,
     detectives,
     suspects,
     rooms,
@@ -113,14 +122,15 @@ function buildCategories(cfg, rng) {
     let values;
     if (id === 'where') {
       const names = rng.shuffle(cfg.rooms).slice(0, n);
-      for (const r of rng.shuffle(ROOM_OPTIONS.map((o) => o.name))) {
+      const fillers = cfg.setting === 'school' ? SCHOOL_ROOMS : ROOM_OPTIONS;
+      for (const r of rng.shuffle(fillers.map((o) => o.name))) {
         if (names.length >= n) break;
         if (!names.includes(r)) names.push(r);
       }
       values = names.map((name) => ({
         key: name,
         name,
-        icon: ROOM_OPTIONS.find((o) => o.name === name)?.icon || '🚪',
+        icon: ALL_ROOMS.find((o) => o.name === name)?.icon || '🚪',
         tags: [],
         trace: ROOM_TRACES[name] || `a speck of dust from the ${name}`,
       }));
@@ -258,7 +268,9 @@ function arrangeSpots(cfg, count, rng) {
   const add = (sp) => { if (sp && !ids.has(sp.id) && picked.length < count) { ids.add(sp.id); picked.push(sp); } };
   rng.shuffle(cfg.spots).forEach(add);
   rng.shuffle(SPOTS.filter((sp) => cfg.rooms.includes(sp.room))).forEach(add);
-  rng.shuffle(SPOTS).forEach(add);
+  // Not enough spots in the chosen rooms: borrow from the same kind of place.
+  rng.shuffle(SPOTS.filter((sp) => Boolean(sp.school) === (cfg.setting === 'school'))).forEach(add);
+  if (picked.length < count) rng.shuffle(SPOTS).forEach(add);
 
   // Send detectives back and forth: avoid two spots in a row in the same room.
   const order = [];
@@ -414,6 +426,7 @@ export function generateCase(input) {
     version: 1,
     input: cfg,
     seed: cfg.seed,
+    setting: cfg.setting,
     difficulty: diff,
     case: { ...theCase, hook: fill(theCase.hook), sceneRoom },
     detectives: cfg.detectives,

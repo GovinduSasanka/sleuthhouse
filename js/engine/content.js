@@ -103,6 +103,15 @@ export const CASES = {
     container: 'the pumpkin bucket by the door',
     hook: 'The costumes were ready and the trick-or-treating was done. But when everyone came back to count the loot, {item} had vanished from {container}. Only a single wrapper and a spooky silence remain.',
   },
+  stocking: {
+    id: 'stocking',
+    icon: '🎄',
+    title: 'The Case of the Missing Christmas Stocking',
+    item: 'the stocking full of Christmas treats',
+    itemShort: 'stocking',
+    container: 'the hook by the Christmas tree',
+    hook: 'On Christmas Eve, every stocking was hung up with care. By morning, {item} had vanished from {container}. All that is left is a trail of tinsel and one very guilty-looking candy cane.',
+  },
   crayon: {
     id: 'crayon',
     icon: '🖍️',
@@ -318,7 +327,27 @@ export const ROOM_OPTIONS = [
   { name: 'Attic', icon: '📦' },
 ];
 
+// Rooms for the classroom preset.
+export const SCHOOL_ROOMS = [
+  { name: 'Classroom', icon: '🏫' },
+  { name: 'Library', icon: '📚' },
+  { name: 'Gym', icon: '🤸' },
+  { name: 'Art Room', icon: '🎨' },
+  { name: 'Playground', icon: '🛝' },
+  { name: 'Cafeteria', icon: '🍱' },
+  { name: 'Music Room', icon: '🎹' },
+  { name: 'Science Lab', icon: '🔬' },
+];
+
 export const ROOM_TRACES = {
+  Classroom: 'a smudge of whiteboard marker',
+  Library: 'a bookmark tassel',
+  Gym: 'a squeaky trainer scuff',
+  'Art Room': 'a splash of blue paint',
+  Playground: 'a little sand in their shoes',
+  Cafeteria: 'a crumb from a lunch tray',
+  'Music Room': 'a scrap of sheet music',
+  'Science Lab': 'a sticky test-tube label',
   Kitchen: 'a dusting of flour on their footprints',
   Garden: 'fresh grass on the carpet',
   Bathroom: 'a whiff of bubble bath',
@@ -372,6 +401,23 @@ export const SPOTS = [
   { id: 'toolbox', label: 'on top of the toolbox (closed!)', room: 'Garage', keyword: 'TOOLS', riddle: 'Hammers and screws are kept in me. Look on my lid, not inside, you see.' },
   { id: 'deskdrawer', label: 'in the desk drawer', room: 'Study', keyword: 'DESK', riddle: 'Homework is done on top of me. Pull out my drawer and you will see.' },
   { id: 'clotheshanger', label: 'hanging in the wardrobe', room: 'Bedroom', keyword: 'WARDROBE', riddle: 'Your clothes hang out in me all day. Open my doors and look this way.' },
+
+  // School spots (classroom preset).
+  { id: 'school-register', school: true, label: 'under the class register', room: 'Classroom', keyword: 'REGISTER', riddle: 'Every morning your name is read from me. Look underneath and you will see.' },
+  { id: 'school-pencils', school: true, label: 'in the pencil pot', room: 'Classroom', keyword: 'PENCILS', riddle: 'Sharp and ready, standing tall, we wait in a pot to help you all.' },
+  { id: 'school-eraser', school: true, label: 'behind the whiteboard eraser', room: 'Classroom', keyword: 'ERASER', riddle: 'I wipe away words when the lesson is done. Look behind me, the hunt has begun.' },
+  { id: 'school-dictionary', school: true, label: 'inside a dictionary', room: 'Library', keyword: 'DICTIONARY', riddle: 'I know what every word means. Look inside me, between the scenes.' },
+  { id: 'school-returns', school: true, label: 'under the book returns box', room: 'Library', keyword: 'RETURNS', riddle: 'Finished books come back to me. Peek underneath and you will see.' },
+  { id: 'school-mat', school: true, label: 'under a gym mat', room: 'Gym', keyword: 'MAT', riddle: 'You tumble and roll on me all day. Lift my corner to find your way.' },
+  { id: 'school-balls', school: true, label: 'in the ball bin', room: 'Gym', keyword: 'BALLS', riddle: 'Bouncy and round, we live in a bin. Dig through us all to find what is in.' },
+  { id: 'school-brushes', school: true, label: 'beside the paintbrush jar', room: 'Art Room', keyword: 'BRUSHES', riddle: 'With fuzzy heads we paint and swirl. Look beside our jar and give it a whirl.' },
+  { id: 'school-apron', school: true, label: 'in an art apron pocket', room: 'Art Room', keyword: 'APRON', riddle: 'I keep the paint off when you create. Check my pocket, do not be late.' },
+  { id: 'school-slide', school: true, label: 'at the bottom of the slide', room: 'Playground', keyword: 'SLIDE', riddle: 'Up the ladder, then whoosh, down fast! Look at my bottom for the clue at last.' },
+  { id: 'school-bucket', school: true, label: 'in the sandpit bucket', room: 'Playground', keyword: 'BUCKET', riddle: 'I carry sand and help build towers. Look inside me, detective powers!' },
+  { id: 'school-tray', school: true, label: 'under a lunch tray', room: 'Cafeteria', keyword: 'TRAY', riddle: 'I carry lunch from counter to seat. Look underneath me for a treat.' },
+  { id: 'school-napkins', school: true, label: 'in the napkin holder', room: 'Cafeteria', keyword: 'NAPKINS', riddle: 'Messy faces need us, it is true. Look in our holder for your next clue.' },
+  { id: 'school-tambourine', school: true, label: 'under the tambourine', room: 'Music Room', keyword: 'TAMBOURINE', riddle: 'Shake me and I jingle and ring. Look under me for the next thing.' },
+  { id: 'school-magnifier', school: true, label: 'under the magnifying glass', room: 'Science Lab', keyword: 'MAGNIFIER', riddle: 'I make tiny things look big. Look under me, no need to dig!' },
 ];
 
 export const DETECTIVE_TITLES = {

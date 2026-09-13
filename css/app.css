@@ -101,6 +101,19 @@
 
 .print-locked { display: none; }
 
+.presets { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; font-size: .88rem; color: var(--muted); font-weight: 700; }
+.toggle { display: flex; align-items: flex-start; gap: 8px; margin-top: 12px; font-size: .9rem; cursor: pointer; }
+.toggle input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--red); flex: none; }
+.toggle .lock { position: static; margin-left: 4px; vertical-align: middle; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200;
+  background: var(--ink); color: var(--paper); padding: 11px 18px; border-radius: 999px; font-weight: 700;
+  box-shadow: var(--shadow); max-width: calc(100vw - 32px); text-align: center;
+  animation: toast-in .2s ease-out;
+}
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } }
+
 .muted { color: var(--muted); }
 .small { font-size: .85rem; }
 

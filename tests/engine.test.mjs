@@ -78,7 +78,7 @@ for (const difficulty of ['rookie', 'junior', 'master']) {
         suspects: NAMES.slice(0, n),
         rooms: ROOMS,
         difficulty,
-        caseType: ['cookies', 'remote', 'cake', 'teddy'][i % 4],
+        caseType: ['cookies', 'remote', 'cake', 'teddy', 'candy', 'stocking'][i % 6],
         seed: `T-${difficulty}-${n}-${i}`,
       };
       const t0 = Date.now();
@@ -116,6 +116,44 @@ for (const difficulty of ['rookie', 'junior', 'master']) {
     }
   }
 }
+
+// Classroom setting: school rooms, school hiding spots, fair logic.
+const SCHOOL = ['Classroom', 'Library', 'Gym', 'Art Room', 'Playground', 'Cafeteria'];
+const STAFF = [
+  { name: 'Principal Park', kind: 'person' }, { name: 'Coach Lee', kind: 'person' }, { name: 'Librarian', kind: 'person' },
+  { name: 'Nibbles the Hamster', kind: 'pet' }, { name: 'Robo Mascot', kind: 'toy' }, { name: 'Ms Silva', kind: 'person' },
+  { name: 'Lunch Lady', kind: 'person' }, { name: 'Goldie', kind: 'pet' },
+];
+for (const difficulty of ['rookie', 'junior', 'master']) {
+  for (let n = 4; n <= 8; n += 2) {
+    const kase = generateCase({ suspects: STAFF.slice(0, n), rooms: SCHOOL.slice(0, 3), difficulty, caseType: 'stocking', seed: `SCHOOL-${difficulty}-${n}` });
+    generated++;
+    const { k, truth, culprit, givens, clues } = kase._logic;
+    const tag = `school ${difficulty} n=${n}`;
+    assert(kase.setting === 'school', `${tag}: setting not detected`);
+    assert(kase.cards.every((c) => c.spot.school), `${tag}: home hiding spot used in a school case`);
+    assert(kase.categories.every((c) => c.id !== 'where' || c.values.every((v) => !['Kitchen', 'Bedroom', 'Garage', 'Bathroom'].includes(v.name))), `${tag}: home room used in a school case`);
+    assert([...givens, ...clues].every((cl) => clueHolds(cl, truth, culprit)), `${tag}: a clue is false`);
+    assert(solve(n, k, [...givens, ...clues]).culprit === culprit, `${tag}: not solvable`);
+  }
+}
+
+// Unsafe icons are replaced rather than printed as HTML.
+const sneaky = generateCase({ suspects: [{ name: 'A', icon: '<img src=x onerror=alert(1)>' }, { name: 'B' }, { name: 'C' }], seed: 'XSS' });
+assert(sneaky.suspects.every((s) => !s.icon.includes('<')), 'unsafe suspect icon was accepted');
+
+// Share links round-trip and reject junk.
+const { encodeSettings, decodeSettings } = await import('../js/share.js');
+const shared = {
+  detectives: ['Nila', 'Kavin'], suspects: [{ name: 'Aachchi ශ්‍රී', kind: 'person', icon: '👵' }, { name: 'Biscuit', kind: 'pet', icon: '🐶' }, { name: 'Robo', kind: 'toy', icon: '🤖' }],
+  rooms: ['Kitchen', 'Tree House'], spots: ['cushion'], customSpots: [{ label: 'in the red teapot', room: 'Kitchen', keyword: 'TEAPOT' }],
+  difficulty: 'junior', caseType: 'candy', seed: 'OWL-1234', teams: true,
+};
+const roundTrip = decodeSettings(encodeSettings(shared));
+assert(JSON.stringify(roundTrip) === JSON.stringify(shared), 'share link does not round-trip');
+assert(decodeSettings('not-a-real-link!!') === null, 'junk share link should decode to null');
+const evil = decodeSettings(encodeSettings({ ...shared, suspects: [{ name: 'x', kind: 'dragon', icon: '<b>' }] }));
+assert(evil.suspects[0].kind === 'person' && evil.suspects[0].icon === '👩', 'share link accepted unsafe suspect data');
 
 // Same input must rebuild the same case.
 const a = generateCase({ suspects: NAMES.slice(0, 5), rooms: ROOMS, difficulty: 'master', seed: 'SAME' });

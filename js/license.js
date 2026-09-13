@@ -53,5 +53,6 @@ export function allowedByFree(settings) {
   if (!f.difficulties.includes(settings.difficulty)) reasons.push('difficulty');
   if (!f.cases.includes(settings.caseType)) reasons.push('case');
   if ((settings.suspects || []).length > f.maxSuspects) reasons.push('suspects');
+  if (settings.teams) reasons.push('teams');
   return { ok: reasons.length === 0, reasons };
 }

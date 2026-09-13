@@ -58,7 +58,7 @@
 .kit .hide-table th, .kit .hide-table td, .kit .truth th, .kit .truth td { border: 1px solid var(--line); padding: 5px 6px; text-align: left; vertical-align: top; font-size: 9.5pt; }
 .kit .hide-table thead th, .kit .truth thead th { background: var(--kraft); font-family: 'Special Elite', monospace; font-weight: 400; }
 .kit .hide-table .num { font-family: 'Special Elite', monospace; font-size: 14pt; text-align: center; width: 34px; }
-.kit .hide-table .small { font-size: 8.5pt; }
+.kit .hide-table .small { font-size: 8pt; line-height: 1.3; }
 .kit .truth tr.guilty th, .kit .truth tr.guilty td { background: #fbe3df; font-weight: 700; }
 
 /* Mission letter */
@@ -137,6 +137,15 @@
 .kit .clue-of { color: var(--muted); }
 .kit .clue-case { margin-left: auto; font-size: 22pt; }
 .kit .clue-list { margin: 0; padding: 0; list-style: none; font-size: 12.5pt; display: grid; gap: 7px; flex: 1; }
+
+/* Party mode */
+.kit .team-badge { display: inline-block; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 10pt; border: 2px solid currentColor; border-radius: 999px; padding: 1px 10px; vertical-align: middle; }
+.kit .team-red { color: var(--red); }
+.kit .team-blue { color: var(--blue); }
+.kit .clue-card.team-red { border-color: var(--red); }
+.kit .clue-card.team-blue { border-color: var(--blue); }
+.kit .clue-card.team-red .clue-num, .kit .clue-card.team-blue .clue-num { color: inherit; }
+.kit .clue-card .team-badge { margin-left: 6px; }
 
 /* Finale */
 .kit .accuse { border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; }

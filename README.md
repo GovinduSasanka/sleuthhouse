@@ -5,7 +5,9 @@
 Sleuthhouse builds printable detective games for kids aged 5–12. The family, pets and toys are the suspects, and the clue cards are hidden in the family's real rooms. Each case comes from a logic engine: the generator invents the hidden truth, picks clues until a deduction solver can name exactly one thief, then removes every clue that isn't needed. So every clue card matters, and none gives the answer away early.
 
 - **Free:** Rookie cases (ages 5–7), up to 5 suspects, 2 crimes.
-- **Pro (one-time purchase):** all 9 crimes, Junior Inspector and Master Sleuth levels (codes, pigpen cipher, logic grids), up to 8 suspects.
+- **Pro (one-time purchase):** all 10 crimes (including Halloween and Christmas), Junior Inspector and Master Sleuth levels (codes, pigpen cipher, logic grids), up to 8 suspects, and party mode (two teams race).
+
+Also included: a **classroom preset** (school rooms, school hiding spots, staff suspects), **share links** that rebuild the exact same case on another device, three **article pages** for search traffic, and ready-made **marketing material**.
 
 Everything runs in the browser. Nothing about the family is uploaded. The only server code is a small license-check function.
 
@@ -43,7 +45,13 @@ js/engine/generator.js  Case generator: truth → clues → minimise → hunt
 js/engine/ciphers.js    Scramble, emoji, Caesar, A1Z26, pigpen
 js/engine/content.js    Crimes, suspects, evidence, hiding spots, riddles
 js/render.js            Case → printable HTML pages
-js/app.js               Builder UI, Pro gating
+js/app.js               Builder UI, presets, party mode, share links, Pro gating
+js/share.js             Settings ⇄ share-link encoding
+halloween.html, detective-birthday-party.html, rainy-day-activities.html
+                        Article pages for search traffic
+sitemap.xml, robots.txt ← replace the placeholder domain before launch
+marketing/pins.html     5 Pinterest pins rendered from real kits
+marketing/VIDEO-SCRIPTS.md  5 short-video scripts
 js/config.js            ← price, checkout link, free-tier limits
 js/license.js           Browser side of license activation
 api/verify-license.js   Vercel function: license codes / Gumroad / Lemon Squeezy

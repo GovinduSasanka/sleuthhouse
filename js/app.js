@@ -1,7 +1,8 @@
 import { generateCase, LIMITS } from './engine/generator.js';
 import { renderKit, esc } from './render.js';
-import { CASES, DIFFICULTIES, ROOM_OPTIONS, SPOTS, SUSPECT_KINDS } from './engine/content.js';
+import { CASES, DIFFICULTIES, ROOM_OPTIONS, SCHOOL_ROOMS, SPOTS, SUSPECT_KINDS } from './engine/content.js';
 import { randomSeed } from './engine/rng.js';
+import { encodeSettings, decodeSettings } from './share.js';
 import { CONFIG } from './config.js';
 import { isPro, activate, deactivate, allowedByFree } from './license.js';
 
@@ -22,6 +23,28 @@ const DEFAULT_STATE = {
   difficulty: 'rookie',
   caseType: 'cookies',
   seed: randomSeed(),
+  teams: false,
+};
+
+const PRESETS = {
+  home: {
+    suspects: DEFAULT_STATE.suspects,
+    rooms: DEFAULT_STATE.rooms,
+    spots: [],
+    customSpots: [],
+  },
+  classroom: {
+    suspects: [
+      { name: 'Principal Park', kind: 'person', icon: '🧔' },
+      { name: 'Coach Rivera', kind: 'person', icon: '🧑' },
+      { name: 'Ms Silva the Librarian', kind: 'person', icon: '👩‍🦱' },
+      { name: 'Nibbles the Hamster', kind: 'pet', icon: '🐹' },
+      { name: 'Robo the Mascot', kind: 'toy', icon: '🤖' },
+    ],
+    rooms: ['Classroom', 'Library', 'Gym', 'Art Room', 'Playground', 'Cafeteria'],
+    spots: [],
+    customSpots: [],
+  },
 };
 
 let state = loadState();
@@ -30,8 +53,10 @@ let regenTimer = null;
 
 const $ = (sel) => document.querySelector(sel);
 
-function loadState() {
-  const params = new URLSearchParams(location.search);
+function baseState(params) {
+  // A shared link rebuilds the sender's exact case.
+  const shared = decodeSettings(new URLSearchParams(location.hash.slice(1)).get('c') || '');
+  if (shared && shared.suspects.length) return { ...structuredClone(DEFAULT_STATE), ...shared };
 
   // Names typed into the landing page demo take priority.
   if (params.get('kid') || params.get('pet') || params.get('adult')) {
@@ -55,10 +80,20 @@ function loadState() {
   } catch {
     // Storage unavailable; start fresh.
   }
-  const fresh = structuredClone(DEFAULT_STATE);
-  if (params.get('case') && CASES[params.get('case')]) fresh.caseType = params.get('case');
-  if (params.get('level') && DIFFICULTIES[params.get('level')]) fresh.difficulty = params.get('level');
-  return fresh;
+  return structuredClone(DEFAULT_STATE);
+}
+
+function loadState() {
+  const params = new URLSearchParams(location.search);
+  const s = baseState(params);
+  // Links from the article pages can preselect a preset, crime or level.
+  if (PRESETS[params.get('preset')]) Object.assign(s, structuredClone(PRESETS[params.get('preset')]));
+  if (CASES[params.get('case')]) s.caseType = params.get('case');
+  if (DIFFICULTIES[params.get('level')]) s.difficulty = params.get('level');
+  if (['preset', 'case', 'level'].some((p) => params.has(p)) || location.hash) {
+    history.replaceState(null, '', location.pathname + (params.get('pro') === '1' ? '?pro=1' : ''));
+  }
+  return s;
 }
 
 function saveState() {
@@ -76,7 +111,9 @@ const lock = (free) => (free || isPro() ? '' : '<span class="lock">PRO</span>');
 // ─── Builder form ─────────────────────────────────────────────────────────────
 
 function renderBuilder() {
-  const roomNames = new Set(ROOM_OPTIONS.map((r) => r.name));
+  const schoolMode = state.rooms.some((r) => SCHOOL_ROOMS.some((o) => o.name === r));
+  const roomList = schoolMode ? SCHOOL_ROOMS : ROOM_OPTIONS;
+  const roomNames = new Set(roomList.map((r) => r.name));
   const customRooms = state.rooms.filter((r) => !roomNames.has(r));
   const spotChoices = SPOTS.filter((sp) => state.rooms.includes(sp.room));
   const pro = isPro();
@@ -85,6 +122,11 @@ function renderBuilder() {
     <div class="builder-intro">
       <h1>Build your case</h1>
       <p>Fill in your family and your house. The kit on the right updates as you go.</p>
+      <div class="presets">
+        <span>Start from an example:</span>
+        <button type="button" class="btn btn-small" data-action="preset" data-id="home">🏠 Home</button>
+        <button type="button" class="btn btn-small" data-action="preset" data-id="classroom">🏫 Classroom</button>
+      </div>
     </div>
 
     <section class="step">
@@ -97,6 +139,10 @@ function renderBuilder() {
         <input class="input" name="name" placeholder="Add a detective’s name" maxlength="40" autocomplete="off">
         <button class="btn btn-small" type="submit">Add</button>
       </form>` : ''}
+      ${state.detectives.length >= 2 ? `<label class="toggle">
+        <input type="checkbox" data-field="teams" ${state.teams ? 'checked' : ''}>
+        <span>🏁 <b>Party mode:</b> split detectives into two teams that race to solve it ${lock(false)}</span>
+      </label>` : ''}
     </section>
 
     <section class="step">
@@ -123,7 +169,7 @@ function renderBuilder() {
       <div class="step-head"><span class="step-num">3</span><h2>Your rooms</h2></div>
       <p class="step-help">Which rooms can detectives explore? Clue cards will only be hidden in these.</p>
       <div class="chips">
-        ${ROOM_OPTIONS.map((r) => `<button type="button" class="chip ${state.rooms.includes(r.name) ? 'on' : ''}" data-action="toggle-room" data-room="${esc(r.name)}" aria-pressed="${state.rooms.includes(r.name)}">${r.icon} ${esc(r.name)}</button>`).join('')}
+        ${roomList.map((r) => `<button type="button" class="chip ${state.rooms.includes(r.name) ? 'on' : ''}" data-action="toggle-room" data-room="${esc(r.name)}" aria-pressed="${state.rooms.includes(r.name)}">${r.icon} ${esc(r.name)}</button>`).join('')}
         ${customRooms.map((r) => `<span class="chip on">🚪 ${esc(r)}<button type="button" class="chip-x" data-action="toggle-room" data-room="${esc(r)}" aria-label="Remove ${esc(r)}">×</button></span>`).join('')}
       </div>
       <form class="inline-add" data-form="room">
@@ -200,7 +246,17 @@ function settingsForEngine() {
     difficulty: state.difficulty,
     caseType: state.caseType,
     seed: state.seed,
+    teams: Boolean(state.teams) && state.detectives.length >= 2,
   };
+}
+
+function toast(message) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.setAttribute('role', 'status');
+  el.textContent = message;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
 }
 
 function regenerate() {
@@ -220,10 +276,10 @@ function regenerate() {
   }
 
   const k = currentCase;
-  $('#kit').innerHTML = renderKit(k);
+  $('#kit').innerHTML = renderKit(k, { teams: settings.teams });
   const pageCount = $('#kit').querySelectorAll('.page').length;
   $('#pv-title').textContent = `${k.case.icon} ${k.case.title}`;
-  $('#pv-meta').textContent = `${k.difficulty.label} · ${k.suspects.length} suspects · ${k.cards.length} hidden clue cards · ${pageCount} pages`;
+  $('#pv-meta').textContent = `${k.difficulty.label} · ${k.suspects.length} suspects · ${k.cards.length} hidden clue cards${settings.teams ? ' per team' : ''} · ${pageCount} pages`;
 
   const gate = allowedByFree({ ...settings, suspects: k.suspects });
   const locked = !gate.ok && !isPro();
@@ -237,6 +293,7 @@ function regenerate() {
       difficulty: `the ${DIFFICULTIES[state.difficulty].label} level`,
       case: `“${CASES[state.caseType].title}”`,
       suspects: `more than ${CONFIG.free.maxSuspects} suspects`,
+      teams: 'party mode',
     }[r])).join(', ');
     banner.innerHTML = `<span>✨ You’re previewing a <b>Pro</b> case (${why}). Unlock Pro to print it.</span><button class="btn btn-small btn-red" type="button" data-action="open-pro">Unlock ${esc(CONFIG.price)}</button>`;
   }
@@ -281,6 +338,7 @@ function openProModal() {
             <li>All ${Object.keys(CASES).length} crimes, from the Sock Snatcher to the Pirate Gold Heist</li>
             <li>Junior Inspector &amp; Master Sleuth levels, with codes and pigpen ciphers</li>
             <li>Up to ${LIMITS.maxSuspects} suspects: the whole family, the cat and the dinosaur</li>
+            <li>Party mode: two teams race to crack the same case</li>
             <li>Unlimited new cases. Every case number is a brand-new mystery</li>
             <li>No Sleuthhouse branding on printed pages</li>
           </ul>
@@ -380,6 +438,22 @@ document.addEventListener('click', (e) => {
       state.seed = randomSeed();
       commit();
       break;
+    case 'preset': {
+      const preset = PRESETS[el.dataset.id];
+      if (!preset) break;
+      if (!window.confirm('Replace your suspects, rooms and hiding spots with this example?')) break;
+      Object.assign(state, structuredClone(preset));
+      commit();
+      break;
+    }
+    case 'share': {
+      const url = `${location.origin}${location.pathname}#c=${encodeSettings(state)}`;
+      const copy = navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject(new Error('no clipboard'));
+      copy
+        .then(() => toast('Link copied! Anyone who opens it gets this exact case.'))
+        .catch(() => window.prompt('Copy this link:', url));
+      break;
+    }
     case 'print':
       if (!currentCase) return;
       if ($('#kit').classList.contains('locked')) {
@@ -406,6 +480,9 @@ document.addEventListener('input', (e) => {
   if (el.dataset.field === 'suspect-name') {
     state.suspects[Number(el.dataset.i)].name = el.value;
     commit({ rebuild: false });
+  } else if (el.dataset.field === 'teams') {
+    state.teams = el.checked;
+    commit();
   } else if (el.dataset.field === 'seed') {
     state.seed = el.value.toUpperCase();
     commit({ rebuild: false });

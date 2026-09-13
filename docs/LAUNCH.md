@@ -84,6 +84,8 @@ Commit, push, and Vercel redeploys automatically. Test the whole flow once with 
 
 ## 3. Get the first 100 customers
 
+**Ready-made material:** `marketing/pins.html` renders 5 Pinterest pins from real kits (open it via the dev server, then screenshot each pin), and `marketing/VIDEO-SCRIPTS.md` has 5 short-video scripts. The article pages `halloween.html`, `detective-birthday-party.html` and `rainy-day-activities.html` target searches parents already make.
+
 Printable kids' activities sell on **being seen**. The product demos itself: a kid running around the house cracking codes is great video. Suggested order:
 
 ### a) Short videos (TikTok, Instagram Reels, YouTube Shorts): highest upside
@@ -124,13 +126,13 @@ Email 20 parenting and "activities for kids" bloggers. Offer a free Pro code in 
 
 ## 5. Roadmap: ideas ranked by likely value
 
-1. **Automatic code delivery**: payment-gateway webhook → mint code → email buyer.
-2. **Christmas case** + **"Party mode"** (split suspects/clues so 2 teams race).
-3. **Classroom mode** with school rooms and a whole-class accusation sheet.
-4. **Photo suspects**: parents upload a photo that is printed on the suspect card (kept in the browser).
-5. **Languages**: Sinhala, Tamil, Spanish and more. Content lives in one file (`js/engine/content.js`).
-6. **Physical kit upsell**: detective badge, magnifying glass and evidence bags. A local 3D-printed badge could even be a side product.
-7. **Share a case**: encode the settings in a link so grandparents can print the same case.
+Already done: Christmas case, party mode, classroom preset, share links, article pages, Pinterest pins and video scripts.
+
+1. **Automatic code delivery**: payment-gateway webhook → mint code → email buyer. Needs an email-sending service account.
+2. **Photo suspects**: parents add a photo that is printed on the suspect card (kept in the browser).
+3. **Languages**: Sinhala, Tamil, Spanish and more. Content lives in one file (`js/engine/content.js`).
+4. **Physical kit upsell**: detective badge, magnifying glass and evidence bags. A local 3D-printed badge could even be a side product.
+5. **More seasonal cases**: Easter egg hunt, Valentine's, end-of-school-year.
 
 ---
 
@@ -138,6 +140,7 @@ Email 20 parenting and "activities for kids" bloggers. Offer a free Pro code in 
 
 - [ ] `npm test` passes
 - [ ] `js/config.js` has the real checkout link, price and email
+- [ ] Replaced `sleuthhouse.vercel.app` with your real address in `js/config.js`, `sitemap.xml`, `robots.txt` and the `canonical` links of the three article pages
 - [ ] Vercel env vars are set; your `OWNER_KEY` unlocks Pro on the live site
 - [ ] A test purchase (or a minted code) unlocks Pro
 - [ ] Printed one full kit on real paper and played it with a kid 🙂

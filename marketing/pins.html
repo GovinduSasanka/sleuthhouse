@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sleuthhouse Pinterest pins</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/site.css">
+  <link rel="stylesheet" href="../css/kit.css">
+  <style>
+    body { background: #d9ccb4; padding: 30px 0 80px; }
+    .intro { max-width: 1000px; margin: 0 auto 26px; padding: 0 20px; }
+    .intro h1 { font-family: var(--display); font-weight: 400; margin: 0; }
+    .pins { display: grid; gap: 40px; justify-content: center; }
+    /* Each pin is exactly 1000×1500 so a screenshot of the element can be uploaded directly. */
+    .pin { width: 1000px; height: 1500px; position: relative; overflow: hidden; border-radius: 0; box-shadow: 0 20px 50px rgba(0,0,0,.25); display: flex; flex-direction: column; }
+    .pin-top { padding: 70px 70px 0; position: relative; z-index: 2; }
+    .pin h2 { font-family: var(--display); font-weight: 400; font-size: 92px; line-height: 1.02; margin: 0 0 22px; }
+    .pin p { font-size: 40px; font-weight: 700; margin: 0; line-height: 1.25; }
+    .pin .papers { position: relative; flex: 1; }
+    .pin .sheet { position: absolute; width: 794px; background: #fffdf7; box-shadow: 0 18px 50px rgba(0,0,0,.28); transform-origin: top left; }
+    .pin .sheet .page { margin: 0; box-shadow: none; }
+    .pin-foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 26px 60px; font-weight: 900; font-size: 36px; }
+    .pin-foot .brand { font-family: var(--display); font-weight: 400; font-size: 46px; }
+    .p-kraft { background: #f3e8d2; color: var(--ink); }
+    .p-kraft .pin-foot { background: var(--ink); color: var(--paper); }
+    .p-red { background: var(--red); color: #fff; }
+    .p-red .pin-foot { background: #fff; color: var(--ink); }
+    .p-night { background: #22201f; color: #fff7e8; }
+    .p-night .pin-foot { background: #e98a2c; color: #22201f; }
+    .p-blue { background: #dce8f5; color: var(--ink); }
+    .p-blue .pin-foot { background: var(--blue); color: #fff; }
+    .p-mustard { background: #f2c45e; color: var(--ink); }
+    .p-mustard .pin-foot { background: var(--ink); color: #f2c45e; }
+    .hl { background: #fff; color: var(--red); padding: 0 12px; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <div class="intro">
+    <h1>Pinterest pins (1000 × 1500)</h1>
+    <p>Each pin below is built from a real generated kit. To export one, screenshot the pin (in Chrome DevTools: right-click the pin element → <b>Capture node screenshot</b>) and upload it to Pinterest with a link to the matching page.</p>
+  </div>
+  <div class="pins" id="pins"></div>
+
+  <script type="module">
+    import { generateCase } from '../js/engine/generator.js';
+    import { renderKit } from '../js/render.js';
+    import { CONFIG } from '../js/config.js';
+
+    const domain = CONFIG.siteUrl.replace(/^https?:\/\//, '');
+    const family = [
+      { name: 'Mum', kind: 'person', icon: '👩' },
+      { name: 'Dad', kind: 'person', icon: '👨' },
+      { name: 'Grandma', kind: 'person', icon: '👵' },
+      { name: 'Biscuit', kind: 'pet', icon: '🐶' },
+      { name: 'Mr Fluff', kind: 'toy', icon: '🧸' },
+    ];
+    const rooms = ['Kitchen', 'Living Room', 'Bedroom', 'Hallway', 'Garden'];
+    const kitPages = (opts, renderOpts = {}) => {
+      const holder = document.createElement('div');
+      holder.innerHTML = renderKit(generateCase({ detectives: ['Maya', 'Leo'], suspects: family, rooms, seed: 'PIN-7', ...opts }), renderOpts);
+      return holder;
+    };
+    const sheet = (pageEl, { left, top, scale, rotate }) =>
+      `<div class="sheet kit" style="left:${left}px;top:${top}px;transform:rotate(${rotate}deg) scale(${scale})">${pageEl.outerHTML}</div>`;
+
+    const designs = [
+      {
+        cls: 'p-kraft', link: '/',
+        title: 'I turned our house into a <span class="hl">crime scene</span> 🔍',
+        text: 'A printable detective mystery where YOUR family are the suspects.',
+        sheets: (h) => [
+          sheet(h.querySelector('.page.mission'), { left: 40, top: 90, scale: .78, rotate: -6 }),
+          sheet(h.querySelector('.page.clues'), { left: 360, top: 170, scale: .78, rotate: 5 }),
+        ],
+        opts: { caseType: 'cookies', difficulty: 'rookie' },
+      },
+      {
+        cls: 'p-blue', link: '/rainy-day-activities.html',
+        title: 'Rainy day? Make it a mystery.',
+        text: '10 minutes of setup · 1 hour of detective work · 0 screens',
+        sheets: (h) => [
+          sheet(h.querySelector('.page.suspects'), { left: 70, top: 110, scale: .82, rotate: -3 }),
+          sheet(h.querySelector('.page.clues'), { left: 330, top: 260, scale: .7, rotate: 7 }),
+        ],
+        opts: { caseType: 'remote', difficulty: 'rookie' },
+      },
+      {
+        cls: 'p-night', link: '/halloween.html',
+        title: 'Halloween mystery game for kids 🎃',
+        text: 'Who stole the candy? Clues hidden around your own house.',
+        sheets: (h) => [
+          sheet(h.querySelector('.page.mission'), { left: 60, top: 120, scale: .8, rotate: 4 }),
+          sheet(h.querySelector('.page.clues'), { left: 300, top: 250, scale: .72, rotate: -5 }),
+        ],
+        opts: { caseType: 'candy', difficulty: 'junior' },
+      },
+      {
+        cls: 'p-red', link: '/detective-birthday-party.html',
+        title: 'Detective birthday party idea',
+        text: 'Two teams race to catch the cake thief.',
+        sheets: (h) => {
+          const clues = h.querySelectorAll('.page.clues');
+          return [
+            sheet(clues[0], { left: 50, top: 110, scale: .76, rotate: -5 }),
+            sheet(clues[clues.length - 1], { left: 350, top: 220, scale: .76, rotate: 6 }),
+          ];
+        },
+        opts: { caseType: 'cake', difficulty: 'junior' },
+        renderOpts: { teams: true },
+      },
+      {
+        cls: 'p-mustard', link: '/',
+        title: 'Logic puzzles kids actually beg for',
+        text: 'Codes, ciphers and a logic grid. Every case has exactly one answer.',
+        sheets: (h) => [
+          sheet(h.querySelector('.page.notebook'), { left: 70, top: 100, scale: .82, rotate: -4 }),
+          sheet(h.querySelectorAll('.page.notebook')[2] || h.querySelectorAll('.page.notebook')[1], { left: 330, top: 260, scale: .7, rotate: 6 }),
+        ],
+        opts: { caseType: 'coins', difficulty: 'master' },
+      },
+    ];
+
+    document.getElementById('pins').innerHTML = designs.map((d) => {
+      const h = kitPages(d.opts, d.renderOpts);
+      return `<div class="pin ${d.cls}">
+        <div class="pin-top"><h2>${d.title}</h2><p>${d.text}</p></div>
+        <div class="papers">${d.sheets(h).join('')}</div>
+        <div class="pin-foot"><span class="brand">🦉 Sleuthhouse</span><span>${domain}${d.link === '/' ? '' : d.link}</span></div>
+      </div>`;
+    }).join('');
+  </script>
+</body>
+</html>

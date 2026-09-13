@@ -53,7 +53,15 @@ function puzzleHtml(puzzle, difficulty, { forCard = true } = {}) {
   </div>`;
 }
 
-function parentGuide(k) {
+const TEAMS = [
+  { id: 'red', name: 'Team Red', icon: '🔴' },
+  { id: 'blue', name: 'Team Blue', icon: '🔵' },
+];
+
+const teamBadge = (team) => (team ? `<span class="team-badge team-${team.id}">${team.icon} ${team.name}</span>` : '');
+const place = (k) => (k.setting === 'school' ? 'school' : 'house');
+
+function parentGuide(k, teams) {
   const time = { rookie: '20–30 minutes', junior: '30–45 minutes', master: '45–75 minutes' }[k.difficulty.id];
   const rows = k.puzzles.map((p, i) => `<tr>
       <td class="num">${i + 1}</td>
@@ -64,7 +72,7 @@ function parentGuide(k) {
     </tr>`).join('');
   return page(`
     <div class="stamp stamp-red">TOP SECRET · GROWN-UPS ONLY</div>
-    <h1 class="title">Parents’ Secret Briefing</h1>
+    <h1 class="title">Grown-ups’ Secret Briefing</h1>
     <p class="lede">${esc(k.case.title)} · ${esc(k.difficulty.label)} (${esc(k.difficulty.ages)}) · about ${time} · Case no. <span class="mono">${esc(k.seed)}</span></p>
 
     <div class="cols">
@@ -73,8 +81,11 @@ function parentGuide(k) {
         <ol class="steps">
           <li>Print every page. Keep this page and the <b>Solution</b> page away from the detectives.</li>
           <li>Cut out the <b>clue cards</b> and <b>suspect cards</b> along the dashed lines.</li>
-          <li>Hide clue cards <b>1 to ${k.cards.length}</b> in the spots in the table below. Folding them in half helps.</li>
-          <li>Hand the detectives the <b>Mission Letter</b>, the <b>suspect cards</b>, the <b>Detective Notebook</b> and a pencil.</li>
+          ${teams
+            ? `<li>Hide cards <b>1 to ${k.cards.length}</b> as listed below. <b>Party mode:</b> each spot gets two cards with the same number, 🔴 Red and 🔵 Blue.</li>
+          <li>Give each team its own <b>Notebook</b>. Teams share the <b>Mission Letter</b> and <b>suspect cards</b>.</li>`
+            : `<li>Hide clue cards <b>1 to ${k.cards.length}</b> in the spots in the table below. Folding them in half helps.</li>
+          <li>Hand the detectives the <b>Mission Letter</b>, the <b>suspect cards</b>, the <b>Detective Notebook</b> and a pencil.</li>`}
           <li>Read the Mission Letter out loud, dramatically. Then let the hunt begin!</li>
           <li>When they’re ready, they fill in the <b>Accusation</b>. Check it against the Solution and read the confession out loud.</li>
         </ol>
@@ -84,7 +95,7 @@ function parentGuide(k) {
         <ul class="bullets">
           <li><b>Every clue is true.</b> The case was checked by a logic solver: there is exactly one possible thief, and no card gives it away early.</li>
           <li>Detectives only need the clues. Nothing depends on luck or guessing.</li>
-          <li>Players in the case can play too! The suspects are only pretend.</li>
+          ${teams ? '' : '<li>Players in the case can play too! The suspects are only pretend.</li>'}
           <li>Stuck detectives? Read out a hint from the right-hand column of the table below.</li>
         </ul>
       </div>
@@ -98,7 +109,7 @@ function parentGuide(k) {
   `, { cls: 'parent', label: 'Parents only' });
 }
 
-function missionLetter(k) {
+function missionLetter(k, teams) {
   const title = DETECTIVE_TITLES[k.difficulty.id];
   const suspects = k.suspects.map((s) => `${s.icon} ${esc(s.name)}`).join(' · ');
   return page(`
@@ -113,12 +124,13 @@ function missionLetter(k) {
     <h1 class="title case-title">${k.case.icon} ${esc(k.case.title)}</h1>
     <div class="letter">
       <p>Dear ${esc(title)} ${joinNames(k.detectives)},</p>
-      <p>We have a serious situation in your house. ${esc(k.case.hook)}</p>
+      <p>We have a serious situation in your ${place(k)}. ${esc(k.case.hook)}</p>
       <p>The crime happened in the <b>${esc(k.case.sceneRoom)}</b>. Our investigation shows that the thief must be one of these ${k.suspects.length} suspects:</p>
       <p class="suspect-line">${suspects}</p>
-      <p>I have hidden <b>${k.cards.length} clue cards</b> around the house. Each clue card tells you something true about the case and shows you where to find the next one. Use your <b>Detective Notebook</b> to cross off suspects as you go.</p>
+      <p>I have hidden <b>${k.cards.length} clue cards</b> around the ${place(k)}. Each clue card tells you something true about the case and shows you where to find the next one. Use your <b>Detective Notebook</b> to cross off suspects as you go.</p>
+      ${teams ? `<p><b>This case is a race!</b> ${TEAMS.map((t) => `${t.icon} <b>${t.name}</b>`).join(' and ')} each have their own clue cards at every hiding spot. Only take the cards for your team, and leave the others exactly where you found them. The first team to name the thief correctly wins!</p>` : ''}
       <p>When you have found every card and only one suspect is left, fill in the Accusation form. Choose carefully. A good detective never guesses!</p>
-      <p>The whole house is counting on you.</p>
+      <p>The whole ${place(k)} is counting on you.</p>
       <p class="sign">${esc(MASCOT.name)} ${MASCOT.icon}<br><span>Chief of Sleuthhouse Detective Agency</span></p>
     </div>
     <div class="first-clue">
@@ -144,9 +156,9 @@ function suspectCards(k) {
   return pages.join('');
 }
 
-function notebook(k) {
+function notebook(k, team) {
   const hidden = k.categories.filter((c) => !c.visible);
-  const head = `<div class="nb-head"><h2 class="section-title">Detective Notebook</h2><div class="nb-owner">Property of: ${joinNames(k.detectives)}</div></div>`;
+  const head = `<div class="nb-head"><h2 class="section-title">Detective Notebook ${teamBadge(team)}</h2><div class="nb-owner">Property of: ${joinNames(k.detectives)}</div></div>`;
 
   const checklist = `<h3>Suspect checklist</h3>
     <p class="small">When a clue proves a suspect is innocent, cross them out!</p>
@@ -192,15 +204,15 @@ function notebook(k) {
   return out.join('');
 }
 
-function clueCards(k) {
+function clueCards(k, team) {
   const cards = k.cards.map((card, i) => {
     const next = k.puzzles[i + 1];
     const body = card.clues.map((cl) => `<li>${cl.type === 'trace' || cl.type === 'notTrace' ? '🔍 ' : cl.type === 'alibi' ? '✅ ' : '🗒️ '}${esc(cl.text)}</li>`).join('');
     const footer = next
       ? puzzleHtml(next, k.difficulty.id)
       : `<div class="puzzle last"><div class="puzzle-lead">That was the LAST clue!</div><p>Look at your notebook. Only one suspect should be left. Fill in the Accusation form and present your case!</p></div>`;
-    return `<div class="clue-card cut">
-      <div class="clue-head"><span class="clue-num">CLUE ${card.number}</span><span class="clue-of">of ${k.cards.length}</span><span class="clue-case">${k.case.icon}</span></div>
+    return `<div class="clue-card cut ${team ? `team-${team.id}` : ''}">
+      <div class="clue-head"><span class="clue-num">CLUE ${card.number}</span><span class="clue-of">of ${k.cards.length}</span>${teamBadge(team)}<span class="clue-case">${k.case.icon}</span></div>
       <ul class="clue-list">${body}</ul>
       ${footer}
     </div>`;
@@ -208,16 +220,16 @@ function clueCards(k) {
   const pages = [];
   const perPage = 2;
   for (let i = 0; i < cards.length; i += perPage) {
-    pages.push(page(`<div class="clue-stack">${cards.slice(i, i + perPage).join('')}</div>`, { cls: 'clues', label: 'Clue cards: cut out and hide' }));
+    pages.push(page(`<div class="clue-stack">${cards.slice(i, i + perPage).join('')}</div>`, { cls: 'clues', label: `Clue cards${team ? ` · ${team.name}` : ''}: cut out and hide` }));
   }
   return pages.join('');
 }
 
-function accusation(k) {
+function accusation(k, team) {
   const title = DETECTIVE_TITLES[k.difficulty.id];
   return page(`
     <div class="accuse">
-      <h2 class="section-title">Official Accusation</h2>
+      <h2 class="section-title">Official Accusation ${teamBadge(team)}</h2>
       <p class="big-line">We, ${esc(title)}${k.detectives.length > 1 ? 's' : ''} ${joinNames(k.detectives)}, accuse</p>
       <div class="suspect-pick">${k.suspects.map((s) => `<span class="pick"><span class="box"></span>${s.icon} ${esc(s.name)}</span>`).join('')}</div>
       <p class="big-line">of taking ${esc(k.case.item)}.</p>
@@ -235,8 +247,15 @@ function accusation(k) {
         <div class="cert-sign"><span>${esc(MASCOT.name)}</span><span>Date: ______________</span></div>
       </div>
     </div>
-    <div class="badges">${k.detectives.map((d) => `<div class="badge cut"><div class="badge-star">★</div><div class="badge-rank">${esc(title)}</div><div class="badge-name">${esc(d)}</div></div>`).join('')}</div>
-  `, { cls: 'finale', label: 'Accusation & certificate' });
+    ${k.detectives.length <= 3 ? badges(k, title) : ''}
+  `, { cls: 'finale', label: 'Accusation & certificate' }) + (k.detectives.length > 3
+    ? page(`<h2 class="section-title">Detective Badges <small>cut along the dashed lines</small></h2>${badges(k, title)}`, { cls: 'finale', label: 'Detective badges' })
+    : '');
+}
+
+// More than three badges don't fit under the certificate, so they get their own page.
+function badges(k, title) {
+  return `<div class="badges">${k.detectives.map((d) => `<div class="badge cut"><div class="badge-star">★</div><div class="badge-rank">${esc(title)}</div><div class="badge-name">${esc(d)}</div></div>`).join('')}</div>`;
 }
 
 function solutionPage(k) {
@@ -256,14 +275,19 @@ function solutionPage(k) {
   `, { cls: 'solution', label: 'Parents only: solution' });
 }
 
-export function renderKit(k) {
+export function renderKit(k, { teams = false } = {}) {
+  if (!teams || k.detectives.length < 2) {
+    return [parentGuide(k), missionLetter(k), suspectCards(k), notebook(k), clueCards(k), accusation(k), solutionPage(k)].join('\n');
+  }
+  // Party mode: detectives alternate between teams; each team gets its own notebook, cards and accusation.
+  const squads = TEAMS.map((team, t) => ({ team, k: { ...k, detectives: k.detectives.filter((_, i) => i % 2 === t) } }));
   return [
-    parentGuide(k),
-    missionLetter(k),
+    parentGuide(k, true),
+    missionLetter(k, true),
     suspectCards(k),
-    notebook(k),
-    clueCards(k),
-    accusation(k),
+    ...squads.map((s) => notebook(s.k, s.team)),
+    ...squads.map((s) => clueCards(s.k, s.team)),
+    ...squads.map((s) => accusation(s.k, s.team)),
     solutionPage(k),
   ].join('\n');
 }
