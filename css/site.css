@@ -18,6 +18,8 @@
 }
 
 * { box-sizing: border-box; }
+/* Components set their own display, so make the hidden attribute always win. */
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
